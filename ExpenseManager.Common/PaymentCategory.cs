@@ -7,5 +7,6 @@ public enum PaymentCategory
     AutomobileServices,
     Entertainment,
     OnlineServices,
-    Taxi
+    Taxi,
+    Crediting
 }

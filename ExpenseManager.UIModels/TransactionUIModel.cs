@@ -68,5 +68,24 @@ public class TransactionUIModel
         _description = dbModel.Description;
         _date = dbModel.Date;
     }
+
+    public void SaveChangesToDBModel()
+    {
+        if (_dbModel != null)
+        {
+            _dbModel.PaymentCategory =  _paymentCategory;
+            _dbModel.Description = _description;
+        }
+        else
+        {
+            _dbModel = new TransactionDBModel(_walletId,  _amount, _paymentCategory, _description, _date);
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"Transaction for {_amount} in {_paymentCategory}: {_description}";
+    }
+    
     
 }

@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ExpenseManager.DBModels\ExpenseManager.DBModels.csproj" />
+      <ProjectReference Include="..\ExpenseManager.Services\ExpenseManager.Services.csproj" />
     </ItemGroup>
 
 </Project>

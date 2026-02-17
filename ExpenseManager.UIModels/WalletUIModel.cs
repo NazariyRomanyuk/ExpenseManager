@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Common;
 using ExpenseManager.DBModels;
+using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels;
 
@@ -56,5 +57,31 @@ public class WalletUIModel
         _name = dbModel.Name;
         _currency = dbModel.Currency;
     }
-    
+
+    public void SaveChangesToDBModel()
+    {
+        if (_dbModel != null)
+        {
+            _dbModel.Name = _name;
+            _dbModel.Currency = _currency;
+        }
+        else
+        {
+            _dbModel = new WalletDBModel(_name, _currency);
+        }
+    }
+
+    public void LoadTransactions(StorageService storageService)
+    {
+        if (Id == null || _transactions.Count > 0) return;
+        foreach (var transaction in storageService.GetTransactions(Id.Value))
+        {
+            _transactions.Add(new TransactionUIModel(transaction));
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"Name: {Name}, Currency: {Currency}, Amount: {WalletSum}";
+    }
 }

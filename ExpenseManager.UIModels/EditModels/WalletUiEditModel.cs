@@ -4,9 +4,9 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.EditModels;
 
-public class WalletUIEditModel
+public class WalletUiEditModel
 {
-    private WalletDBModel _dbModel;
+    private WalletDbModel _dbModel;
     private string _name;
 
     public Guid Id => _dbModel.Id;
@@ -17,7 +17,7 @@ public class WalletUIEditModel
         set => _name = value;
     }
     
-    public WalletUIEditModel(WalletDBModel dbModel)
+    public WalletUiEditModel(WalletDbModel dbModel)
     {
         _dbModel = dbModel;
         _name = dbModel.Name;
@@ -25,7 +25,7 @@ public class WalletUIEditModel
     
     public void SaveChangesToDbModel()
     {
-        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentNullException(nameof(_name), "Name cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentException("Name cannot be null or empty.", nameof(_name));
         _dbModel.Name = _name;
     }
 }

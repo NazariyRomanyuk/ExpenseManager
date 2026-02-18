@@ -2,7 +2,7 @@
 
 namespace ExpenseManager.DBModels;
 
-public class TransactionDBModel
+public class TransactionDbModel
 {
     public Guid Id { get; }
     public Guid WalletId { get; }
@@ -11,7 +11,7 @@ public class TransactionDBModel
     public string Description { get; set; }
     public DateTime Date { get; }
 
-    public TransactionDBModel(Guid walletId, decimal amount, PaymentCategory paymentCategory, 
+    public TransactionDbModel(Guid walletId, decimal amount, PaymentCategory paymentCategory, 
         string description, DateTime date)
     {
         Id = Guid.NewGuid();

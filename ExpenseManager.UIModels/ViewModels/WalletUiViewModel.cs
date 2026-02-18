@@ -4,15 +4,15 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 
-public class WalletUIViewModel
+public class WalletUiViewModel
 {
-    private readonly WalletDBModel _dbModel;
-    private List<TransactionUIViewModel>? _transactions;
+    private readonly WalletDbModel _dbModel;
+    private List<TransactionUiViewModel>? _transactions;
 
     public Guid Id => _dbModel.Id;
     public string Name => _dbModel.Name;
     public Currency Currency => _dbModel.Currency;
-    public IReadOnlyList<TransactionUIViewModel>? Transactions => _transactions;
+    public IReadOnlyList<TransactionUiViewModel>? Transactions => _transactions;
 
     public decimal? WalletSum => _transactions?.Sum(t => t.Amount);
 
@@ -26,7 +26,7 @@ public class WalletUIViewModel
         }
     } 
 
-    public WalletUIViewModel(WalletDBModel dbModel)
+    public WalletUiViewModel(WalletDbModel dbModel)
     {
         _dbModel = dbModel;
         _transactions = null;
@@ -35,10 +35,10 @@ public class WalletUIViewModel
     public void LoadTransactions(StorageService storageService)
     {
         if (_transactions != null) return;
-        _transactions = new List<TransactionUIViewModel>();
+        _transactions = new List<TransactionUiViewModel>();
         foreach (var transaction in storageService.GetTransactions(Id))
         {
-            _transactions.Add(new TransactionUIViewModel(transaction, Currency));
+            _transactions.Add(new TransactionUiViewModel(transaction, Currency));
         }
     }
     public override string ToString()

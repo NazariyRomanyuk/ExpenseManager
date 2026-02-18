@@ -3,7 +3,7 @@
 using ExpenseManager.Common;
 using ExpenseManager.DBModels;
 
-public class WalletUICreateModel
+public class WalletUiCreateModel
 {
     private string _name = string.Empty;
     private Currency _currency;
@@ -20,9 +20,9 @@ public class WalletUICreateModel
         set => _currency = value;
     }
     
-    public WalletDBModel CreateDBModel()
+    public WalletDbModel CreateDbModel()
     {
         if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentException("Name cannot be null or empty.", nameof(_name));
-        return new WalletDBModel(_name, _currency);
+        return new WalletDbModel(_name, _currency);
     }
 }

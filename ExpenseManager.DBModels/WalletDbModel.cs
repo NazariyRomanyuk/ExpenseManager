@@ -2,13 +2,13 @@
 
 namespace ExpenseManager.DBModels;
 
-public class WalletDBModel
+public class WalletDbModel
 {
     public Guid Id { get; }
     public string Name { get; set; }
     public Currency Currency { get; }
 
-    public WalletDBModel(string name, Currency currency)
+    public WalletDbModel(string name, Currency currency)
     {
         Id = Guid.NewGuid();
         Name = name;

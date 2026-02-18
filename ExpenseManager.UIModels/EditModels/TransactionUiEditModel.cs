@@ -3,9 +3,9 @@ using ExpenseManager.DBModels;
 
 namespace ExpenseManager.UIModels.EditModels;
 
-public class TransactionUIEditModel
+public class TransactionUiEditModel
 {
-    private readonly TransactionDBModel _dbModel;
+    private readonly TransactionDbModel _dbModel;
     private PaymentCategory _paymentCategory;
     private string _description;
     public Guid Id => _dbModel.Id;
@@ -22,14 +22,14 @@ public class TransactionUIEditModel
         set => _description = value;
     }
     
-    public TransactionUIEditModel(TransactionDBModel dbModel)
+    public TransactionUiEditModel(TransactionDbModel dbModel)
     {
         _dbModel = dbModel;
         _paymentCategory = dbModel.PaymentCategory;
         _description = dbModel.Description;
     }
 
-    public void SaveChangesToDBModel()
+    public void SaveChangesToDbModel()
     {
         if (string.IsNullOrWhiteSpace(_description)) throw new ArgumentNullException(nameof(_description), "Description cannot be null or empty.");
         _dbModel.PaymentCategory =  _paymentCategory;

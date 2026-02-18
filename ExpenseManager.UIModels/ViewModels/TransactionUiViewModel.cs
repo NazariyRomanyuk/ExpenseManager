@@ -4,9 +4,9 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 
-public class TransactionUIViewModel
+public class TransactionUiViewModel
 {
-    private readonly TransactionDBModel _dbModel;
+    private readonly TransactionDbModel _dbModel;
 
     public Guid Id => _dbModel.Id;
     public Guid WalletId => _dbModel.WalletId;
@@ -17,7 +17,7 @@ public class TransactionUIViewModel
     public bool IsExpense => _dbModel.Amount < 0;
     public Currency Currency { get; }
 
-    public TransactionUIViewModel(TransactionDBModel dbModel, Currency currency)
+    public TransactionUiViewModel(TransactionDbModel dbModel, Currency currency)
     {
         _dbModel = dbModel;
         Currency = currency;

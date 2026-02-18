@@ -5,20 +5,22 @@ namespace ExpenseManager.Services;
 
 public class StorageService
 {
-    private List<WalletDBModel> _wallets;
-    private List<TransactionDBModel> _transactions;
+    private List<WalletDBModel> _wallets = new();
+    private List<TransactionDBModel> _transactions = new();
+    private bool _loaded;
 
     private void LoadData()
     {
-        if (_wallets != null && _transactions != null) return;
+        if (_loaded) return;
         _wallets = DummyStorage.Wallets.ToList();
         _transactions = DummyStorage.Transactions.ToList();
+        _loaded = true;
     }
 
     public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
     {
         LoadData();
-        return _transactions.Where(w => w.Id == walletId);
+        return _transactions.Where(t => t.WalletId == walletId);
     }
 
     public IEnumerable<WalletDBModel> GetWallets()
@@ -26,4 +28,18 @@ public class StorageService
         LoadData();
         return _wallets.ToList();
     }
+
+    public TransactionDBModel? GetTransaction(Guid transactionId)
+    {
+        LoadData();
+        return _transactions.FirstOrDefault(w => w.Id == transactionId);
+    }
+
+    public WalletDBModel? GetWallet(Guid walletId)
+    {
+        LoadData();
+        return _wallets.FirstOrDefault(w => w.Id == walletId);
+    }
+    
+    
 }

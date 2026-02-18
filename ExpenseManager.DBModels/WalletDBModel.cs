@@ -6,9 +6,9 @@ public class WalletDBModel
 {
     public Guid Id { get; }
     public string Name { get; set; }
-    public WalletCurrency Currency { get; set; }
+    public Currency Currency { get; }
 
-    public WalletDBModel(string name, WalletCurrency currency)
+    public WalletDBModel(string name, Currency currency)
     {
         Id = Guid.NewGuid();
         Name = name;

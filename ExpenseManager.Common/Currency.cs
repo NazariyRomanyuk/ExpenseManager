@@ -1,6 +1,6 @@
 ﻿namespace ExpenseManager.Common;
 
-public enum WalletCurrency
+public enum Currency
 {
     UAH,
     USD,

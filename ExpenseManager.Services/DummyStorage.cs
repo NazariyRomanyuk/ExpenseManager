@@ -8,21 +8,21 @@ internal static class DummyStorage
     private static readonly List<WalletDBModel> _wallets;
     private static readonly List<TransactionDBModel> _transactions;
     
-    internal static List<WalletDBModel> Wallets => _wallets;
-    internal static List<TransactionDBModel> Transactions => _transactions;
+    internal static IEnumerable<WalletDBModel> Wallets => _wallets;
+    internal static IEnumerable<TransactionDBModel> Transactions => _transactions;
 
     static DummyStorage()
     {
-        var uahWallet = new WalletDBModel("Hryvnia Wallet", WalletCurrency.UAH);
-        var usdWallet = new WalletDBModel("Dollar Wallet", WalletCurrency.USD);
-        var eurWallet = new WalletDBModel("Euro Wallet", WalletCurrency.EUR);
+        var uahWallet = new WalletDBModel("Hryvnia Wallet", Currency.UAH);
+        var usdWallet = new WalletDBModel("Dollar Wallet", Currency.USD);
+        var eurWallet = new WalletDBModel("Euro Wallet", Currency.EUR);
         _wallets = new List<WalletDBModel> { uahWallet, usdWallet, eurWallet };
         _transactions = new List<TransactionDBModel>()
         {
             new TransactionDBModel(uahWallet.Id, 10000m, PaymentCategory.Crediting, "Salary for October 2025", new DateTime(2025,10,01,02,30,11)),
             new TransactionDBModel(uahWallet.Id, -2100m, PaymentCategory.Shopping, "LC Waikiki payment", new DateTime(2025,10,06,19,11,20)),
             new TransactionDBModel(uahWallet.Id, -384.57m, PaymentCategory.AutomobileServices, "OKKO gas payment", new DateTime(2025,10,14,07,45,14)),
-            new TransactionDBModel(uahWallet.Id, -384.57m, PaymentCategory.OnlineServices, "Google One payment", new DateTime(2025,10,28,20,00,00)),
+            new TransactionDBModel(uahWallet.Id, -231.19m, PaymentCategory.OnlineServices, "Google One payment", new DateTime(2025,10,28,20,00,00)),
             new TransactionDBModel(uahWallet.Id, 12000m, PaymentCategory.Crediting, "Salary for November 2025", new DateTime(2025,11,01,02,30,11)),
             new TransactionDBModel(uahWallet.Id, -247.2m, PaymentCategory.Taxi, "Uklon payment", new DateTime(2025,11,15,14,23,54)),
             new TransactionDBModel(uahWallet.Id, -399.9m, PaymentCategory.FoodAndBeverage, "ATB payment", new DateTime(2025,11,22,17,02,04)),

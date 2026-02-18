@@ -2,12 +2,11 @@
 
 using ExpenseManager.Common;
 using ExpenseManager.DBModels;
-using ExpenseManager.Services;
 
 public class WalletUICreateModel
 {
-    private string _name;
-    private WalletCurrency _currency;
+    private string _name = string.Empty;
+    private Currency _currency;
     
     public string Name
     {
@@ -15,20 +14,15 @@ public class WalletUICreateModel
         set => _name = value;
     }
 
-    public WalletCurrency Currency
+    public Currency Currency
     {
         get => _currency;
         set => _currency = value;
     }
-
-    public WalletUICreateModel()
-    {
-  
-    }
-
+    
     public WalletDBModel CreateDBModel()
     {
-        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentNullException(nameof(_name) , "Name cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentException("Name cannot be null or empty.", nameof(_name));
         return new WalletDBModel(_name, _currency);
     }
 }

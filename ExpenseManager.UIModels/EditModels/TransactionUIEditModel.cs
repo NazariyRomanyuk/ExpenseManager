@@ -12,13 +12,13 @@ public class TransactionUIEditModel
     
     public PaymentCategory PaymentCategory
     {
-        get => _dbModel.PaymentCategory;
+        get => _paymentCategory;
         set => _paymentCategory = value;
     }
     
     public string Description
     {
-        get => _dbModel.Description;
+        get => _description;
         set => _description = value;
     }
     

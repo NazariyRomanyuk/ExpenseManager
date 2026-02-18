@@ -5,10 +5,10 @@ namespace ExpenseManager.UIModels.CreateModels;
 
 public class TransactionUICreateModel
 {
-    private Guid _walletId;
+    private readonly Guid _walletId;
     private decimal _amount;
     private PaymentCategory _paymentCategory;
-    private string _description;
+    private string _description = string.Empty;
     private DateTime _date;
 
     public Guid WalletId => _walletId;
@@ -24,15 +24,23 @@ public class TransactionUICreateModel
         get => _description;
         set => _description = value;
     }
-    public decimal Amount => _amount;
-    public DateTime Date => _date;
+    public decimal Amount 
+    {
+        get => _amount;
+        set => _amount = value;
+    }
+    public DateTime Date
+    {
+        get => _date;
+        set => _date = value;
+    }
 
     public TransactionUICreateModel(Guid walletId)
     {
         _walletId = walletId;
     }
 
-    public TransactionDBModel CreateDBModel (TransactionDBModel dbModel)
+    public TransactionDBModel CreateDBModel ()
     { 
         return new TransactionDBModel(_walletId,  _amount, _paymentCategory, _description, _date);
     }

@@ -1,12 +1,11 @@
-﻿using ExpenseManager.Common;
-using ExpenseManager.DBModels;
-using ExpenseManager.Services;
+﻿using ExpenseManager.DBModels;
 
 namespace ExpenseManager.UIModels.EditModels;
 
 public class WalletUiEditModel
 {
-    private WalletDbModel _dbModel;
+    // Only the name, which is settable in the DB model present (+ Id).
+    private readonly WalletDbModel _dbModel;
     private string _name;
 
     public Guid Id => _dbModel.Id;
@@ -25,7 +24,6 @@ public class WalletUiEditModel
     
     public void SaveChangesToDbModel()
     {
-        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentException("Name cannot be null or empty.", nameof(_name));
         _dbModel.Name = _name;
     }
 }

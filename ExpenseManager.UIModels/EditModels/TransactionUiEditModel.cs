@@ -5,9 +5,12 @@ namespace ExpenseManager.UIModels.EditModels;
 
 public class TransactionUiEditModel
 {
+    // Only fields that are settable in the DB model present (+ Id).
     private readonly TransactionDbModel _dbModel;
     private PaymentCategory _paymentCategory;
+    private decimal _amount;
     private string _description;
+    
     public Guid Id => _dbModel.Id;
     
     public PaymentCategory PaymentCategory
@@ -21,18 +24,25 @@ public class TransactionUiEditModel
         get => _description;
         set => _description = value;
     }
+
+    public decimal Amount
+    {
+        get => _amount;
+        set => _amount = value;
+    }
     
     public TransactionUiEditModel(TransactionDbModel dbModel)
     {
         _dbModel = dbModel;
         _paymentCategory = dbModel.PaymentCategory;
         _description = dbModel.Description;
+        _amount = dbModel.Amount;
     }
 
     public void SaveChangesToDbModel()
     {
-        if (string.IsNullOrWhiteSpace(_description)) throw new ArgumentNullException(nameof(_description), "Description cannot be null or empty.");
         _dbModel.PaymentCategory =  _paymentCategory;
         _dbModel.Description = _description;
+        _dbModel.Amount = _amount;
     }
 }

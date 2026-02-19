@@ -8,11 +8,16 @@ public class TransactionUiCreateModel
     private readonly Guid _walletId;
     private decimal _amount;
     private PaymentCategory _paymentCategory;
+    // Initialized to suppress IntelliSense warnings.
     private string _description = string.Empty;
     private DateTime _date;
 
+    // No Id needed - not created yet.
+    
+    // Wallet not directly settable - set through constructor.
     public Guid WalletId => _walletId;
     
+    // All properties present with setters to instantiate the object.
     public PaymentCategory PaymentCategory
     {
         get => _paymentCategory;

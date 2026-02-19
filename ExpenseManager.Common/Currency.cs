@@ -2,10 +2,10 @@
 
 public enum Currency
 {
-    UAH,
-    USD,
-    EUR,
-    GBP,
-    CHF,
-    JPY
+    Uah,
+    Usd,
+    Eur,
+    Gbp,
+    Chf,
+    Jpy
 }

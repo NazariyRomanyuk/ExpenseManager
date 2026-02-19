@@ -8,7 +8,7 @@ internal class ConsoleApp
     private static StorageService _storageService;
     private static List<WalletUiViewModel> _wallets;
     
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         Console.WriteLine("Welcome to the Expense Manager console app!");
         _storageService = new StorageService();
@@ -21,7 +21,7 @@ internal class ConsoleApp
                 Console.WriteLine(wallet);
             }
             Console.WriteLine("To view the transactions for a specific wallet, enter the wallet name. To quit, enter \"quit\".");
-            String walletName = Console.ReadLine();
+            String? walletName = Console.ReadLine();
 
             if (walletName == "quit")
             {
@@ -55,7 +55,7 @@ internal class ConsoleApp
     {
         if (_wallets != null) return;
         _wallets = new List<WalletUiViewModel>();
-        foreach (var wallet in _storageService.GetWallets())
+        foreach (var wallet in _storageService.GetAllWallets())
         {
             _wallets.Add(new WalletUiViewModel(wallet));
         }

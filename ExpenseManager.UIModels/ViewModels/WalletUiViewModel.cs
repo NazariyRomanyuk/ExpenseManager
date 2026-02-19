@@ -7,8 +7,10 @@ namespace ExpenseManager.UIModels.ViewModels;
 public class WalletUiViewModel
 {
     private readonly WalletDbModel _dbModel;
+    // Transaction list nullable for being able to keep track of unloaded state.
     private List<TransactionUiViewModel>? _transactions;
 
+    // Properties only have getters - view model has no access to setting.
     public Guid Id => _dbModel.Id;
     public string Name => _dbModel.Name;
     public Currency Currency => _dbModel.Currency;
@@ -16,6 +18,7 @@ public class WalletUiViewModel
 
     public decimal? WalletSum => _transactions?.Sum(t => t.Amount);
 
+    // Separate readable output for unloaded state, empty wallet and wallet with transactions.
     public string SumDescription
     {
         get

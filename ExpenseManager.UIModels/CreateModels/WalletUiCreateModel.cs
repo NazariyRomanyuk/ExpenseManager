@@ -5,6 +5,7 @@ using ExpenseManager.DBModels;
 
 public class WalletUiCreateModel
 {
+    // Initialized to suppress IntelliSense warnings.
     private string _name = string.Empty;
     private Currency _currency;
     
@@ -22,7 +23,6 @@ public class WalletUiCreateModel
     
     public WalletDbModel CreateDbModel()
     {
-        if (string.IsNullOrWhiteSpace(_name)) throw new ArgumentException("Name cannot be null or empty.", nameof(_name));
         return new WalletDbModel(_name, _currency);
     }
 }

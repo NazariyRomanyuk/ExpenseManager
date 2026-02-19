@@ -13,9 +13,9 @@ internal static class DummyStorage
 
     static DummyStorage()
     {
-        var uahWallet = new WalletDbModel("Hryvnia Wallet", Currency.UAH);
-        var usdWallet = new WalletDbModel("Dollar Wallet", Currency.USD);
-        var eurWallet = new WalletDbModel("Euro Wallet", Currency.EUR);
+        var uahWallet = new WalletDbModel("Hryvnia Wallet", Currency.Uah);
+        var usdWallet = new WalletDbModel("Dollar Wallet", Currency.Usd);
+        var eurWallet = new WalletDbModel("Euro Wallet", Currency.Eur);
         _wallets = new List<WalletDbModel> { uahWallet, usdWallet, eurWallet };
         _transactions = new List<TransactionDbModel>()
         {

@@ -5,7 +5,7 @@ using ExpenseManager.DBModels;
 
 public class WalletUiCreateModel
 {
-    // Initialized to suppress IntelliSense warnings.
+    // Initialized to suppress IntelliSense warnings about potential null reference types.
     private string _name = string.Empty;
     private Currency _currency;
     

@@ -8,7 +8,7 @@ public class TransactionUiCreateModel
     private readonly Guid _walletId;
     private decimal _amount;
     private PaymentCategory _paymentCategory;
-    // Initialized to suppress IntelliSense warnings.
+    // Initialized to suppress IntelliSense warnings about potential null reference types.
     private string _description = string.Empty;
     private DateTime _date;
 

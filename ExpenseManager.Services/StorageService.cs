@@ -2,7 +2,7 @@
 
 namespace ExpenseManager.Services;
 
-public class StorageService
+public class StorageService : IStorageService
 {
     // Collections instantiated to suppress IntelliSense warnings.
     private List<WalletDbModel> _wallets = new();

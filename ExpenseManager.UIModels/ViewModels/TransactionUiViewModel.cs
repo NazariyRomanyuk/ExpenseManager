@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Common;
 using ExpenseManager.DBModels;
+using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 

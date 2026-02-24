@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Services", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManagerConsole", "ExpenseManagerConsole\ExpenseManagerConsole.csproj", "{D923CEDB-1178-4FDE-9FE6-C06CBBF7A773}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager", "ExpenseManager\ExpenseManager.csproj", "{A5765988-B402-4A53-928B-0E0C9498C726}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{D923CEDB-1178-4FDE-9FE6-C06CBBF7A773}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D923CEDB-1178-4FDE-9FE6-C06CBBF7A773}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D923CEDB-1178-4FDE-9FE6-C06CBBF7A773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5765988-B402-4A53-928B-0E0C9498C726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5765988-B402-4A53-928B-0E0C9498C726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5765988-B402-4A53-928B-0E0C9498C726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5765988-B402-4A53-928B-0E0C9498C726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

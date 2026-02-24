@@ -6,6 +6,7 @@ namespace ExpenseManager.UIModels.ViewModels;
 
 public class WalletUiViewModel
 {
+    private readonly IStorageService _storageService;
     private readonly WalletDbModel _dbModel;
     // Transaction list nullable for being able to keep track of unloaded state.
     private List<TransactionUiViewModel>? _transactions;
@@ -29,17 +30,18 @@ public class WalletUiViewModel
         }
     } 
 
-    public WalletUiViewModel(WalletDbModel dbModel)
+    public WalletUiViewModel(IStorageService storageService, WalletDbModel dbModel)
     {
+        _storageService = storageService;
         _dbModel = dbModel;
         _transactions = null;
     }
 
-    public void LoadTransactions(StorageService storageService)
+    public void LoadTransactions()
     {
         if (_transactions != null) return;
         _transactions = new List<TransactionUiViewModel>();
-        foreach (var transaction in storageService.GetTransactions(Id))
+        foreach (var transaction in _storageService.GetTransactions(Id))
         {
             _transactions.Add(new TransactionUiViewModel(transaction, Currency));
         }

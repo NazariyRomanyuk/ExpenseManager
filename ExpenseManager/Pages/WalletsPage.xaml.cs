@@ -11,9 +11,9 @@ namespace ExpenseManager.Pages;
 
 public partial class WalletsPage : ContentPage
 {
-    private StorageService _storageService;
+    private IStorageService _storageService;
     public ObservableCollection<WalletUiViewModel> Wallets { get; set; }
-    public WalletsPage(StorageService storageService)
+    public WalletsPage(IStorageService storageService)
     {
         InitializeComponent();
         _storageService = storageService;

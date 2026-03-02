@@ -1,5 +1,7 @@
 ﻿using ExpenseManager.Services;
 using Microsoft.Extensions.Logging;
+using ExpenseManager.Pages;
+
 
 namespace ExpenseManager;
 
@@ -20,6 +22,7 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
         builder.Services.AddSingleton<IStorageService, StorageService>();
+        builder.Services.AddTransient<WalletsPage>();
         return builder.Build();
     }
 }

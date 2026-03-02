@@ -1,4 +1,4 @@
-﻿namespace ExpenseManager.Common;
+﻿namespace ExpenseManager.Common.Enums;
 
 public enum PaymentCategory
 {

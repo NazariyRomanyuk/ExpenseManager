@@ -1,4 +1,6 @@
-﻿namespace ExpenseManager.UIModels.CreateModels;
+﻿using ExpenseManager.Common.Enums;
+
+namespace ExpenseManager.UIModels.CreateModels;
 
 using ExpenseManager.Common;
 using ExpenseManager.DBModels;

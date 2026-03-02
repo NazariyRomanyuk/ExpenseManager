@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Common;
+using ExpenseManager.Common.Enums;
 
 namespace ExpenseManager.DBModels;
 

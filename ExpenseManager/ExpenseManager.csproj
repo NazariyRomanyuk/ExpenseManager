@@ -71,6 +71,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ExpenseManager.Services\ExpenseManager.Services.csproj" />
       <ProjectReference Include="..\ExpenseManager.UIModels\ExpenseManager.UIModels.csproj" />
     </ItemGroup>
 

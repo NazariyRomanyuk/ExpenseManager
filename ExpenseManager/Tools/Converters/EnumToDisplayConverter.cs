@@ -2,7 +2,7 @@
 using ExpenseManager.Common;
 
 
-namespace ExpenseManager.Tools;
+namespace ExpenseManager.Tools.Converters;
 
 public class EnumToDisplayConverter : IValueConverter
 {

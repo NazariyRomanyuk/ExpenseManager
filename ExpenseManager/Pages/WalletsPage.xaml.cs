@@ -24,4 +24,10 @@ public partial class WalletsPage : ContentPage
         }
         BindingContext = this;
     }
+
+    private void WalletSelected(object? sender, SelectionChangedEventArgs e)
+    {
+        var wallet = (WalletUiViewModel)e.CurrentSelection[0];
+        Shell.Current.GoToAsync("WalletDetails", new Dictionary<string, object>{{"SelectedWallet", wallet}});
+    }
 }

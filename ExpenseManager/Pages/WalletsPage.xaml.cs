@@ -11,13 +11,13 @@ namespace ExpenseManager.Pages;
 
 public partial class WalletsPage : ContentPage
 {
-    private IStorageService _storageService;
+    private readonly IStorageService _storageService;
     public ObservableCollection<WalletUiViewModel> Wallets { get; set; }
     public WalletsPage(IStorageService storageService)
     {
         InitializeComponent();
         _storageService = storageService;
-        Wallets = new ObservableCollection<WalletUiViewModel>();
+        Wallets = [];
         foreach (var wallet in _storageService.GetAllWallets())
         {
             Wallets.Add(new WalletUiViewModel(_storageService, wallet));

@@ -11,8 +11,8 @@ namespace ExpenseManager.Pages;
 [QueryProperty(nameof(CurrentWallet), "SelectedWallet")]
 public partial class WalletDetailsPage : ContentPage
 {
-    private IStorageService _storageService;
-    private WalletUiViewModel _currentWallet;
+    private readonly IStorageService _storageService;
+    private WalletUiViewModel _currentWallet = null!;
 
     public WalletUiViewModel CurrentWallet
     {

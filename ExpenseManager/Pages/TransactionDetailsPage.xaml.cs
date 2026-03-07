@@ -10,7 +10,7 @@ namespace ExpenseManager.Pages;
 [QueryProperty(nameof(CurrentTransaction), "SelectedTransaction")]
 public partial class TransactionDetailsPage : ContentPage
 {
-    private TransactionUiViewModel _currentTransaction;
+    private TransactionUiViewModel _currentTransaction = null!;
 
     public TransactionUiViewModel CurrentTransaction
     {

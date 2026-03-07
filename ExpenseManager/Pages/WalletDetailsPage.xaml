@@ -44,7 +44,8 @@
                         x:DataType="models:TransactionUiViewModel">
                         <Border
                             Stroke="Green"
-                            Padding="5">
+                            Padding="5"
+                            StrokeShape="RoundRectangle 4">
                             <VerticalStackLayout>
                                 <Label 
                                     Style="{StaticResource SubHeadline}">

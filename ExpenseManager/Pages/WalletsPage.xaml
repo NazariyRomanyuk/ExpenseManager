@@ -22,7 +22,7 @@
                     <Border
                         Stroke="Green"
                         Padding="10"
-                        HorizontalOptions="Center"
+                       
                         StrokeShape="RoundRectangle 4">
                             <VerticalStackLayout>
                                 <Label 

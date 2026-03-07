@@ -19,13 +19,18 @@ public class TransactionUiViewModel
     public bool IsExpense => _dbModel.Amount < 0;
     // The currency, associated with the wallet, is good to have for view - obtained from above through constructor.
     // Not really achievable otherwise without intertwining it with StorageService - which is bad for a simple view model.
-    public Currency Currency { get; }
     
-    public TransactionUiViewModel(TransactionDbModel dbModel, Currency currency)
+    public string IsExpenseDescription => IsExpense ? "Yes" : "No";
+    public Currency Currency { get; }
+    public string WalletName { get; }
+    
+    public TransactionUiViewModel(TransactionDbModel dbModel, Currency currency, string walletName)
     {
+        WalletName = walletName;
         _dbModel = dbModel;
         Currency = currency;
     }
+    
     public override string ToString()
     {
         return $"Transaction for {Amount} {Currency} in {PaymentCategory} on {Date}. Is Expense = {IsExpense} \n \"{Description}\"\n";

@@ -20,7 +20,7 @@
                             HorizontalOptions="Center">
                             <Label.Text>
                                 <MultiBinding
-                                    StringFormat="{} {0} {1}">
+                                    StringFormat="{}{0} {1}">
                                     <Binding Path="SumDescription"></Binding>
                                     <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
                                 </MultiBinding>
@@ -51,7 +51,7 @@
                                     Style="{StaticResource SubHeadline}">
                                     <Label.Text>
                                         <MultiBinding
-                                            StringFormat="{} {0} {1}">
+                                            StringFormat="{}{0} {1}">
                                             <Binding Path="Amount"></Binding>
                                             <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
                                         </MultiBinding>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExpenseManager.Services;
+﻿using ExpenseManager.Services;
 using ExpenseManager.UIModels.ViewModels;
 
 namespace ExpenseManager.Pages;
@@ -11,7 +6,6 @@ namespace ExpenseManager.Pages;
 [QueryProperty(nameof(CurrentWallet), "SelectedWallet")]
 public partial class WalletDetailsPage : ContentPage
 {
-    private readonly IStorageService _storageService;
     private WalletUiViewModel _currentWallet = null!;
 
     public WalletUiViewModel CurrentWallet
@@ -28,7 +22,6 @@ public partial class WalletDetailsPage : ContentPage
     public WalletDetailsPage(IStorageService storageService)
     {
         InitializeComponent();
-        _storageService = storageService;
     }
 
     private void TransactionSelected(object? sender, SelectionChangedEventArgs e)

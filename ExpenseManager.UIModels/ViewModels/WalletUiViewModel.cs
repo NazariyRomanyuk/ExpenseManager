@@ -46,7 +46,7 @@ public class WalletUiViewModel : INotifyPropertyChanged
         _transactions = new List<TransactionUiViewModel>();
         foreach (var transaction in _storageService.GetTransactions(Id))
         {
-            _transactions.Add(new TransactionUiViewModel(transaction, Currency));
+            _transactions.Add(new TransactionUiViewModel(transaction, Currency, Name));
         }
         OnPropertyChanged(nameof(SumDescription));
     }

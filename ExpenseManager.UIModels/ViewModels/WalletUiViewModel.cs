@@ -1,11 +1,13 @@
-﻿using ExpenseManager.Common;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ExpenseManager.Common;
 using ExpenseManager.Common.Enums;
 using ExpenseManager.DBModels;
 using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 
-public class WalletUiViewModel
+public class WalletUiViewModel : INotifyPropertyChanged
 {
     private readonly IStorageService _storageService;
     private readonly WalletDbModel _dbModel;
@@ -46,9 +48,17 @@ public class WalletUiViewModel
         {
             _transactions.Add(new TransactionUiViewModel(transaction, Currency));
         }
+        OnPropertyChanged(nameof(SumDescription));
     }
     public override string ToString()
     {
         return $"Name: {Name}, Currency: {Currency}, Amount: {SumDescription}";
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

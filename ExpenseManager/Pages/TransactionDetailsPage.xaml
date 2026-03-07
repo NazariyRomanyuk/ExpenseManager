@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:ExpenseManager.UIModels.ViewModels;assembly=ExpenseManager.UIModels"
+             x:Class="ExpenseManager.Pages.TransactionDetailsPage"
+             x:DataType="models:TransactionUiViewModel"
+             Title="Transaction Details">
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout
+                Padding = "10,20"
+                Spacing="10">
+                    <Label
+                        Text="Amount"
+                        Style="{StaticResource SubHeadline}"/>
+                    <Label Margin="10,0" HorizontalOptions="Center">
+                        <MultiBinding
+                            StringFormat="{} {0} {1}">
+                            <Binding Path="Amount"></Binding>
+                            <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                        </MultiBinding>
+                    </Label>
+                    <Label
+                        Text="Payment Category"
+                        Style="{StaticResource SubHeadline}"/>
+                    <Label
+                        Text="{Binding PaymentCategory, Converter={StaticResource EnumToDisplayConverter}}"
+                        Margin="10,0"
+                        HorizontalOptions="Center"></Label>
+                    <Label
+                        Text="Description"
+                        Style="{StaticResource SubHeadline}"/>
+                    <Label
+                        Text="{Binding Description}"
+                        Margin="10,0"
+                        HorizontalOptions="Center"></Label>
+                    <Label
+                        Text="Date"
+                        Style="{StaticResource SubHeadline}"/>
+                    <Label
+                        Text="{Binding Date, StringFormat='{0:dd MMMM yyyy, hh:mm:ss}'}"
+                        Margin="10,0"
+                        HorizontalOptions="Center"></Label>
+                    <Label
+                        Text="Is Expense?"
+                        Style="{StaticResource SubHeadline}"/>
+                    <Label
+                        Text="{Binding IsExpense}"
+                        Margin="10,0"
+                        HorizontalOptions="Center"></Label>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -11,30 +11,36 @@
         Margin="10"
         SelectionMode="Single"
         SelectionChanged="WalletSelected">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout 
+                Orientation="Vertical" 
+                ItemSpacing="10"/>
+        </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate
                 x:DataType="models:WalletUiViewModel">
-                <Border
-                    Stroke="Magenta"
-                    Padding="5"
-                    Margin="0,10">
-                    <VerticalStackLayout>
-                        <Label 
-                            Style="{StaticResource SubHeadline}"
-                            Text="{Binding Name}">
-                        </Label>
-                        <Label
-                            HorizontalOptions="Center">
-                            <Label.Text>
-                                <MultiBinding
-                                    StringFormat="{} {0} {1}">
-                                    <Binding Path="SumDescription"></Binding>
-                                    <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-                    </VerticalStackLayout>                    
-                </Border>
+                    <Border
+                        Stroke="Green"
+                        Padding="10"
+                        HorizontalOptions="Center"
+                        StrokeShape="RoundRectangle 4">
+                            <VerticalStackLayout>
+                                <Label 
+                                    Style="{StaticResource SubHeadline}"
+                                    Text="{Binding Name}">
+                                </Label>
+                                <Label
+                                    HorizontalOptions="Center">
+                                    <Label.Text>
+                                        <MultiBinding
+                                            StringFormat="{} {0} {1}">
+                                            <Binding Path="SumDescription"></Binding>
+                                            <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </VerticalStackLayout>                    
+                    </Border>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

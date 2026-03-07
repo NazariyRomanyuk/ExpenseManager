@@ -28,6 +28,6 @@ public partial class WalletsPage : ContentPage
     private void WalletSelected(object? sender, SelectionChangedEventArgs e)
     {
         var wallet = (WalletUiViewModel)e.CurrentSelection[0];
-        Shell.Current.GoToAsync("WalletDetails", new Dictionary<string, object>{{"SelectedWallet", wallet}});
+        Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}", new Dictionary<string, object>{{"SelectedWallet", wallet}});
     }
 }

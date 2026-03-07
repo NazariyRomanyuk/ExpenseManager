@@ -9,38 +9,42 @@
     <ContentPage.Content>
         
         <Grid RowDefinitions="Auto, *">
-            <Border
-                Stroke="Blue"
-                Padding="10"
-                Margin="0,10">
-                <VerticalStackLayout>
-                    <Label 
-                        Style="{StaticResource SubHeadline}"
-                        Text="{Binding Name}">
-                    </Label>
-                    <Label
-                        HorizontalOptions="Center">
-                        <Label.Text>
-                            <MultiBinding
-                                StringFormat="{} {0} {1}">
-                                <Binding Path="SumDescription"></Binding>
-                                <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
-                            </MultiBinding>
-                        </Label.Text>
-                    </Label>
-                </VerticalStackLayout>    
-            </Border>
+            <VerticalStackLayout>
+                <BoxView HeightRequest="1" Color="Turquoise" />
+                    <VerticalStackLayout Margin="10">
+                        <Label 
+                            Style="{StaticResource SubHeadline}"
+                            Text="{Binding Name}">
+                        </Label>
+                        <Label
+                            HorizontalOptions="Center">
+                            <Label.Text>
+                                <MultiBinding
+                                    StringFormat="{} {0} {1}">
+                                    <Binding Path="SumDescription"></Binding>
+                                    <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </VerticalStackLayout>    
+                <BoxView HeightRequest="1" Color="Turquoise" />
+            </VerticalStackLayout>
             <CollectionView Grid.Row = "1"
                 ItemsSource="{Binding Transactions}"
                 Margin="10"
-                SelectionMode="Single">
+                SelectionMode="Single"
+                SelectionChanged="TransactionSelected">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout 
+                        Orientation="Vertical" 
+                        ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate
                         x:DataType="models:TransactionUiViewModel">
                         <Border
-                            Stroke="Magenta"
-                            Padding="5"
-                            Margin="0,10">
+                            Stroke="Green"
+                            Padding="5">
                             <VerticalStackLayout>
                                 <Label 
                                     Style="{StaticResource SubHeadline}">

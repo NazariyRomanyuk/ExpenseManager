@@ -30,5 +30,10 @@ public partial class WalletDetailsPage : ContentPage
         InitializeComponent();
         _storageService = storageService;
     }
-    
+
+    private void TransactionSelected(object? sender, SelectionChangedEventArgs e)
+    {
+        var transaction = (TransactionUiViewModel)e.CurrentSelection[0];
+        Shell.Current.GoToAsync($"{nameof(TransactionDetailsPage)}", new Dictionary<string, object>{{"SelectedTransaction", transaction}});
+    }
 }

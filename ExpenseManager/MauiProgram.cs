@@ -16,6 +16,8 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("Quicksand-Regular.ttf", "QuicksandRegular");
+                fonts.AddFont("Quicksand-Bold.ttf", "QuicksandBold");
             });
 
 #if DEBUG
@@ -23,6 +25,8 @@ public static class MauiProgram
 #endif
         builder.Services.AddSingleton<IStorageService, StorageService>();
         builder.Services.AddTransient<WalletsPage>();
+        builder.Services.AddTransient<WalletDetailsPage>();
+        builder.Services.AddTransient<TransactionDetailsPage>();
         return builder.Build();
     }
 }

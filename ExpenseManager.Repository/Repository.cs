@@ -29,4 +29,9 @@ public class Repository : IRepository
     {
         return _storageContext.GetTransaction(transactionId);
     }
+
+    public decimal GetAmountForWallet(Guid walletId)
+    {
+        return _storageContext.GetAmountForWallet(walletId);
+    }
 }

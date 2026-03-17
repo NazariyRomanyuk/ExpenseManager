@@ -8,4 +8,5 @@ public interface IStorageContext
     IEnumerable<WalletDbModel> GetAllWallets();
     TransactionDbModel GetTransaction(Guid transactionId);
     WalletDbModel GetWallet(Guid walletId);
+    decimal GetAmountForWallet(Guid walletId);
 }

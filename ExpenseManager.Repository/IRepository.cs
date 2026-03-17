@@ -8,4 +8,5 @@ public interface IRepository
     IEnumerable<TransactionDbModel> GetTransactions(Guid walletId);
     WalletDbModel GetWallet(Guid walletId);
     TransactionDbModel GetTransaction(Guid transactionId);
+    decimal GetAmountForWallet(Guid walletId);
 }

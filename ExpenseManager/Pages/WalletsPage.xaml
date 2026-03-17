@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:ExpenseManager.UIModels.ViewModels;assembly=ExpenseManager.UIModels"
-             xmlns:pages1="clr-namespace:ExpenseManager.Pages"
+             xmlns:models="clr-namespace:ExpenseManager.DTOModels;assembly=ExpenseManager.DTOModels"
+             xmlns:viewmodels="clr-namespace:ExpenseManager.ViewModels"
              x:Class="ExpenseManager.Pages.WalletsPage"             
-             x:DataType="pages1:WalletsPage"
+             x:DataType="viewmodels:WalletsViewModel"
              Title="Wallets">
     <CollectionView
         ItemsSource="{Binding Wallets}"
         Margin="10"
-        SelectionMode="Single"
-        SelectionChanged="WalletSelected">
+        SelectionMode="Single">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout 
                 Orientation="Vertical" 
@@ -18,7 +17,7 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate
-                x:DataType="models:WalletUiViewModel">
+                x:DataType="models:WalletListDto">
                     <Border
                         Stroke="Green"
                         Padding="10"
@@ -34,7 +33,7 @@
                                     <Label.Text>
                                         <MultiBinding
                                             StringFormat="{} {0} {1}">
-                                            <Binding Path="SumDescription"></Binding>
+                                            <Binding Path="Amount"></Binding>
                                             <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
                                         </MultiBinding>
                                     </Label.Text>

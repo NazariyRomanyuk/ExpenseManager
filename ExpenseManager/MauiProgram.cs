@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using ExpenseManager.Pages;
 using ExpenseManager.Storage;
+using ExpenseManager.ViewModels;
+using LecturerManager.Repository;
 
 
 namespace ExpenseManager;
@@ -25,10 +27,16 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
         builder.Services.AddSingleton<IStorageContext, InMemoryStorageContext>();
+        builder.Services.AddSingleton<IRepository, Repository>();
+        builder.Services.AddSingleton<IService, Service>();
+        
         builder.Services.AddSingleton<IStorageService, StorageService>();
+        
         builder.Services.AddTransient<WalletsPage>();
         builder.Services.AddTransient<WalletDetailsPage>();
         builder.Services.AddTransient<TransactionDetailsPage>();
+        
+        builder.Services.AddSingleton<WalletsViewModel>();
         return builder.Build();
     }
 }

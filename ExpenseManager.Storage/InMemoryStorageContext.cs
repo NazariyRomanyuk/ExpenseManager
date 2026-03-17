@@ -73,4 +73,9 @@ public class InMemoryStorageContext : IStorageContext
         var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
         return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency);
     }
+
+    public decimal GetAmountForWallet(Guid walletId)
+    {
+        return _transactions.Where(transaction => transaction.WalletId == walletId).Sum(transaction => transaction.Amount);
+    }
 }

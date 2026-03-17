@@ -25,6 +25,6 @@ public class WalletUiCreateModel
     
     public WalletDbModel CreateDbModel()
     {
-        return new WalletDbModel(_name, _currency);
+        return new WalletDbModel(Guid.NewGuid(), _name, _currency);
     }
 }

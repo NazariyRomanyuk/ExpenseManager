@@ -10,12 +10,20 @@ public class Service : IService
     {
         _repository = repository;
     }
-    public IEnumerable<WalletListDto> GetAllWallets()
+    public IEnumerable<WalletDto> GetAllWallets()
     {
         foreach (var wallet in _repository.GetAllWallets())
         {
             var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-            yield return new WalletListDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
+            yield return new WalletDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
         }
+    }
+
+    // TODO: same as in storage, what to do if null?
+    public WalletDto GetWallet(Guid walletId)
+    {
+        var wallet = _repository.GetWallet(walletId);
+        var walletAmount = _repository.GetAmountForWallet(wallet.Id);
+        return new WalletDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
     }
 }

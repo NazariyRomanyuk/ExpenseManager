@@ -2,9 +2,10 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:ExpenseManager.UIModels.ViewModels;assembly=ExpenseManager.UIModels"
+             xmlns:viewmodels="clr-namespace:ExpenseManager.ViewModels;assembly=ExpenseManager.ViewModels"
+             xmlns:viewModels="clr-namespace:ExpenseManager.ViewModels"
              x:Class="ExpenseManager.Pages.WalletDetailsPage"
-             x:DataType="models:WalletUiViewModel"
+             x:DataType="viewModels:WalletDetailsViewModel"
              Title = "Wallet Details">
     <ContentPage.Content>
         
@@ -14,22 +15,22 @@
                     <VerticalStackLayout Margin="10">
                         <Label 
                             Style="{StaticResource SubHeadline}"
-                            Text="{Binding Name}">
+                            Text="{Binding CurrentWallet.Name}">
                         </Label>
                         <Label
                             HorizontalOptions="Center">
                             <Label.Text>
                                 <MultiBinding
                                     StringFormat="{}{0} {1}">
-                                    <Binding Path="SumDescription"></Binding>
-                                    <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                                    <Binding Path="CurrentWallet.Amount"></Binding>
+                                    <Binding Path="CurrentWallet.Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
                                 </MultiBinding>
                             </Label.Text>
                         </Label>
                     </VerticalStackLayout>    
                 <BoxView HeightRequest="1" Color="Turquoise" />
             </VerticalStackLayout>
-            <CollectionView Grid.Row = "1"
+            <!--<CollectionView Grid.Row = "1"
                 ItemsSource="{Binding Transactions}"
                 Margin="10"
                 SelectionMode="Single"
@@ -65,7 +66,7 @@
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>
+            </CollectionView>!-->
         </Grid>
     </ContentPage.Content>
 </ContentPage>

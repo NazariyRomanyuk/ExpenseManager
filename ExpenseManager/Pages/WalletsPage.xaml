@@ -9,7 +9,9 @@
     <CollectionView
         ItemsSource="{Binding Wallets}"
         Margin="10"
-        SelectionMode="Single">
+        SelectionMode="Single"
+        SelectedItem="{Binding CurrentWallet}"
+        SelectionChangedCommand="{Binding WalletSelected}">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout 
                 Orientation="Vertical" 
@@ -17,7 +19,7 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate
-                x:DataType="models:WalletListDto">
+                x:DataType="models:WalletDto">
                     <Border
                         Stroke="Green"
                         Padding="10"

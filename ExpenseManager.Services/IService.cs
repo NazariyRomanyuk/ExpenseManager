@@ -5,5 +5,7 @@ namespace ExpenseManager.Services;
 
 public interface IService
 {
-    public IEnumerable<WalletListDto> GetAllWallets();
+    IEnumerable<WalletDto> GetAllWallets();
+    WalletDto GetWallet(Guid walletId);
+    
 }

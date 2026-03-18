@@ -61,6 +61,7 @@ public class InMemoryStorageContext : IStorageContext
             yield return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency);
     }
 
+    // TODO: Deal with null return when Id is wrong
     public TransactionDbModel GetTransaction(Guid transactionId)
     {
         var transaction = _transactions.FirstOrDefault(w => w.Id == transactionId);

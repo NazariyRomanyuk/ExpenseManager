@@ -1,22 +1,24 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ExpenseManager.DTOModels;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ExpenseManager.DTOModels.Transaction;
+using ExpenseManager.DTOModels.Wallet;
+using ExpenseManager.Pages;
 using ExpenseManager.Services;
 
 namespace ExpenseManager.ViewModels;
 
-public class WalletDetailsViewModel : IQueryAttributable, INotifyPropertyChanged
+public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IService _service;
-    private WalletDto _currentWallet;
-    public WalletDto CurrentWallet {
-        get => _currentWallet;
-        private set {
-            _currentWallet = value;
-            OnPropertyChanged();
-        }
-    }
-    public event PropertyChangedEventHandler? PropertyChanged;
+    
+    [ObservableProperty]
+    public partial WalletDetailsDto CurrentWallet {get; private set;}
+
+    [ObservableProperty]
+    public partial ObservableCollection<TransactionListDto> Transactions { get; set; }
 
     public WalletDetailsViewModel(IService service)
     {
@@ -27,11 +29,15 @@ public class WalletDetailsViewModel : IQueryAttributable, INotifyPropertyChanged
     {
         var walletId = (Guid)query["WalletId"];
         CurrentWallet = _service.GetWallet(walletId);
+        Transactions = new ObservableCollection<TransactionListDto>(_service.GetTransactions(walletId));
+        OnPropertyChanged(nameof(Transactions));
+    }
+
+    [RelayCommand]
+    private void LoadTransaction(Guid transactionId)
+    {
+        Shell.Current.GoToAsync($"{nameof(TransactionDetailsPage)}",
+            new Dictionary<string, object>{{ "transactionId", transactionId }});
     }
     
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

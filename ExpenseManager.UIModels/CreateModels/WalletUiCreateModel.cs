@@ -23,8 +23,10 @@ public class WalletUiCreateModel
         set => _currency = value;
     }
     
+    public string OwnerFirstAndLastName { get; set; }
+    
     public WalletDbModel CreateDbModel()
     {
-        return new WalletDbModel(Guid.NewGuid(), _name, _currency);
+        return new WalletDbModel(Guid.NewGuid(), _name, _currency, OwnerFirstAndLastName);
     }
 }

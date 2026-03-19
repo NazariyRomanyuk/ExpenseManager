@@ -1,14 +1,14 @@
 ﻿using ExpenseManager.Common.Enums;
 
-namespace ExpenseManager.DTOModels;
+namespace ExpenseManager.DTOModels.Wallet;
 
-public class WalletDto
+public class WalletListDto
 {
     public Guid Id { get; }
     public string Name { get; }
     public Currency Currency { get; }
     public decimal Amount { get; set; }
-    public WalletDto(Guid id, string name, Currency currency, decimal amount)
+    public WalletListDto(Guid id, string name, Currency currency, decimal amount)
     {
         Id = id;
         Name = name;

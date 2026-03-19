@@ -5,17 +5,17 @@ namespace ExpenseManager.Storage;
 
 public class InMemoryStorageContext : IStorageContext
 {
-    private record WalletRecord(Guid Id, string Name, Currency Currency);
+    private record WalletRecord(Guid Id, string Name, Currency Currency, string OwnerFirstAndLastName);
     private record TransactionRecord(Guid Id, Guid WalletId, decimal Amount, PaymentCategory PaymentCategory, string Description, DateTime Date);
 
-    private static readonly List<WalletRecord> _wallets = new List<WalletRecord>();
-    private static readonly List<TransactionRecord> _transactions = new List<TransactionRecord>();
+    private static readonly List<WalletRecord> _wallets = new();
+    private static readonly List<TransactionRecord> _transactions = new();
 
     static InMemoryStorageContext()
     {
-        var uahWallet = new WalletRecord(Guid.NewGuid(),"Hryvnia Wallet", Currency.Uah);
-        var usdWallet = new WalletRecord(Guid.NewGuid(),"Dollar Wallet", Currency.Usd);
-        var eurWallet = new WalletRecord(Guid.NewGuid(),"Euro Wallet", Currency.Eur);
+        var uahWallet = new WalletRecord(Guid.NewGuid(),"Hryvnia Wallet", Currency.Uah, "Nazariy Romanyuk");
+        var usdWallet = new WalletRecord(Guid.NewGuid(),"Dollar Wallet", Currency.Usd, "Kevin Mackelroy");
+        var eurWallet = new WalletRecord(Guid.NewGuid(),"Euro Wallet", Currency.Eur, "Erik Svensson");
         _wallets.Add(uahWallet);
         _wallets.Add(usdWallet);
         _wallets.Add(eurWallet);
@@ -58,7 +58,7 @@ public class InMemoryStorageContext : IStorageContext
     public IEnumerable<WalletDbModel> GetAllWallets()
     {
         foreach (var wallet in _wallets)
-            yield return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency);
+            yield return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstAndLastName);
     }
 
     // TODO: Deal with null return when Id is wrong
@@ -72,7 +72,7 @@ public class InMemoryStorageContext : IStorageContext
     public WalletDbModel GetWallet(Guid walletId)
     {
         var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
-        return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency);
+        return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstAndLastName);
     }
 
     public decimal GetAmountForWallet(Guid walletId)

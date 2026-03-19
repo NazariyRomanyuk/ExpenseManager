@@ -1,4 +1,5 @@
-﻿using ExpenseManager.DTOModels;
+﻿using ExpenseManager.DTOModels.Transaction;
+using ExpenseManager.DTOModels.Wallet;
 using LecturerManager.Repository;
 
 namespace ExpenseManager.Services;
@@ -10,20 +11,29 @@ public class Service : IService
     {
         _repository = repository;
     }
-    public IEnumerable<WalletDto> GetAllWallets()
+    public IEnumerable<WalletListDto> GetAllWallets()
     {
         foreach (var wallet in _repository.GetAllWallets())
         {
             var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-            yield return new WalletDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
+            yield return new WalletListDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
         }
     }
 
     // TODO: same as in storage, what to do if null?
-    public WalletDto GetWallet(Guid walletId)
+    public WalletDetailsDto GetWallet(Guid walletId)
     {
         var wallet = _repository.GetWallet(walletId);
         var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-        return new WalletDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
+        return new WalletDetailsDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstAndLastName);
+    }
+
+    public IEnumerable<TransactionListDto> GetTransactions(Guid walletId)
+    {
+        foreach (var transaction in _repository.GetTransactions(walletId))
+        {
+            var walletCurrency = _repository.GetWallet(transaction.WalletId).Currency;
+            yield return new TransactionListDto(transaction.Id, transaction.Amount, walletCurrency, transaction.PaymentCategory);
+        }
     }
 }

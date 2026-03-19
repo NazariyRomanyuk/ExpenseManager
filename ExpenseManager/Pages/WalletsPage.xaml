@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:ExpenseManager.DTOModels;assembly=ExpenseManager.DTOModels"
              xmlns:viewmodels="clr-namespace:ExpenseManager.ViewModels"
+             xmlns:models="clr-namespace:ExpenseManager.DTOModels.Wallet;assembly=ExpenseManager.DTOModels"
              x:Class="ExpenseManager.Pages.WalletsPage"             
              x:DataType="viewmodels:WalletsViewModel"
              Title="Wallets">
@@ -19,7 +19,7 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate
-                x:DataType="models:WalletDto">
+                x:DataType="models:WalletListDto">
                     <Border
                         Stroke="Green"
                         Padding="10"

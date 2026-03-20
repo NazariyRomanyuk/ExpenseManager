@@ -9,5 +9,6 @@ public interface IService
     IEnumerable<WalletListDTO> GetAllWallets();
     WalletDetailsDTO GetWallet(Guid walletId);
     IEnumerable<TransactionListDTO> GetTransactions(Guid walletId);
+    TransactionDetailsDTO GetTransaction(Guid transactionId);
     
 }

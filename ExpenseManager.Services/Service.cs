@@ -36,4 +36,12 @@ public class Service : IService
             yield return new TransactionListDTO(transaction.Id, transaction.Amount, walletCurrency, transaction.PaymentCategory);
         }
     }
+
+    public TransactionDetailsDTO GetTransaction(Guid transactionId)
+    {
+        var transaction = _repository.GetTransaction(transactionId);
+        var wallet = _repository.GetWallet(transaction.WalletId);
+        return new TransactionDetailsDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory, transaction.Description, 
+            transaction.Date, wallet.Name);
+    }
 }

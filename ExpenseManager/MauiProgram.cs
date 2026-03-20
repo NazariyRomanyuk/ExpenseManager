@@ -38,6 +38,7 @@ public static class MauiProgram
         
         builder.Services.AddSingleton<WalletsViewModel>();
         builder.Services.AddTransient<WalletDetailsViewModel>();
+        builder.Services.AddTransient<TransactionDetailsViewModel>();
         return builder.Build();
     }
 }

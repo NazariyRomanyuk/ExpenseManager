@@ -2,9 +2,9 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:models="clr-namespace:ExpenseManager.UIModels.ViewModels;assembly=ExpenseManager.UIModels"
+             xmlns:viewmodels="clr-namespace:ExpenseManager.ViewModels"
              x:Class="ExpenseManager.Pages.TransactionDetailsPage"
-             x:DataType="models:TransactionUIViewModel"
+             x:DataType="viewmodels:TransactionDetailsViewModel"
              Title="Transaction Details">
     <ContentPage.Content>
         <ScrollView>
@@ -51,7 +51,7 @@
                         Style="{StaticResource SubHeadline}"
                         FontFamily="QuicksandBold"/>
                     <Label
-                        Text="{Binding IsExpenseDescription}"
+                        Text="{Binding IsExpense}"
                         Margin="10,0"
                         HorizontalOptions="Center"></Label>
                     <Label

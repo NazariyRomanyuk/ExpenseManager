@@ -1,24 +1,13 @@
 ﻿using ExpenseManager.UIModels.ViewModels;
+using ExpenseManager.ViewModels;
 
 namespace ExpenseManager.Pages;
 
-[QueryProperty(nameof(CurrentTransaction), "SelectedTransaction")]
 public partial class TransactionDetailsPage : ContentPage
 {
-    private TransactionUIViewModel _currentTransaction = null!;
-
-    public TransactionUIViewModel CurrentTransaction
-    {
-        get => _currentTransaction;
-        set
-        {
-            _currentTransaction = value;
-            BindingContext = CurrentTransaction;
-        }
-    }
-
-    public TransactionDetailsPage()
+    public TransactionDetailsPage(TransactionDetailsViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
     }
 }

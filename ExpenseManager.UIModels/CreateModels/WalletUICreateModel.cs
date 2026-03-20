@@ -5,7 +5,7 @@ namespace ExpenseManager.UIModels.CreateModels;
 using ExpenseManager.Common;
 using ExpenseManager.DBModels;
 
-public class WalletUiCreateModel
+public class WalletUICreateModel
 {
     // Initialized to suppress IntelliSense warnings about potential null reference types.
     private string _name = string.Empty;
@@ -26,8 +26,8 @@ public class WalletUiCreateModel
     public string OwnerFirstName { get; set; }
     public string OwnerLastName { get; set; }
     
-    public WalletDbModel CreateDbModel()
+    public WalletDBModel CreateDbModel()
     {
-        return new WalletDbModel(Guid.NewGuid(), _name, _currency, OwnerFirstName, OwnerLastName);
+        return new WalletDBModel(Guid.NewGuid(), _name, _currency, OwnerFirstName, OwnerLastName);
     }
 }

@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:ExpenseManager.UIModels.ViewModels;assembly=ExpenseManager.UIModels"
              x:Class="ExpenseManager.Pages.TransactionDetailsPage"
-             x:DataType="models:TransactionUiViewModel"
+             x:DataType="models:TransactionUIViewModel"
              Title="Transaction Details">
     <ContentPage.Content>
         <ScrollView>

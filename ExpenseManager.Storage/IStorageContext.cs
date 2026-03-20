@@ -4,9 +4,9 @@ namespace ExpenseManager.Storage;
 
 public interface IStorageContext
 {
-    IEnumerable<TransactionDbModel> GetTransactions(Guid walletId);
-    IEnumerable<WalletDbModel> GetAllWallets();
-    TransactionDbModel GetTransaction(Guid transactionId);
-    WalletDbModel GetWallet(Guid walletId);
+    IEnumerable<TransactionDBModel> GetTransactions(Guid walletId);
+    IEnumerable<WalletDBModel> GetAllWallets();
+    TransactionDBModel GetTransaction(Guid transactionId);
+    WalletDBModel GetWallet(Guid walletId);
     decimal GetAmountForWallet(Guid walletId);
 }

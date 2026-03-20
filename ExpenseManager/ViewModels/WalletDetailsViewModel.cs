@@ -15,10 +15,10 @@ public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributab
     private readonly IService _service;
     
     [ObservableProperty]
-    public partial WalletDetailsDto CurrentWallet {get; private set;}
+    public partial WalletDetailsDTO CurrentWallet {get; private set;}
 
     [ObservableProperty]
-    public partial ObservableCollection<TransactionListDto> Transactions { get; set; }
+    public partial ObservableCollection<TransactionListDTO> Transactions { get; set; }
 
     public WalletDetailsViewModel(IService service)
     {
@@ -29,7 +29,7 @@ public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributab
     {
         var walletId = (Guid)query["WalletId"];
         CurrentWallet = _service.GetWallet(walletId);
-        Transactions = new ObservableCollection<TransactionListDto>(_service.GetTransactions(walletId));
+        Transactions = new ObservableCollection<TransactionListDTO>(_service.GetTransactions(walletId));
         OnPropertyChanged(nameof(Transactions));
     }
 

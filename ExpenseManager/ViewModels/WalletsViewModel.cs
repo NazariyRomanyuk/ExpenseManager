@@ -8,14 +8,14 @@ namespace ExpenseManager.ViewModels;
 public class WalletsViewModel
 {
     private readonly IService _service;
-    public ObservableCollection<WalletListDto> Wallets { get; set; }
-    public WalletListDto CurrentWallet { get; set; }
+    public ObservableCollection<WalletListDTO> Wallets { get; set; }
+    public WalletListDTO CurrentWallet { get; set; }
     public Command WalletSelected { get; }
 
     public WalletsViewModel(IService service)
     {
         _service = service;
-        Wallets = new ObservableCollection<WalletListDto>(_service.GetAllWallets());
+        Wallets = new ObservableCollection<WalletListDTO>(_service.GetAllWallets());
         WalletSelected = new Command(LoadWallet);
     }
     

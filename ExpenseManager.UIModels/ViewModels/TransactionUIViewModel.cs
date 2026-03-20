@@ -5,10 +5,10 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 
-public class TransactionUiViewModel
+public class TransactionUIViewModel
 {
     // Properties only have getters - view model has no access to setting.
-    private readonly TransactionDbModel _dbModel;
+    private readonly TransactionDBModel _dbModel;
 
     public Guid Id => _dbModel.Id;
     public Guid WalletId => _dbModel.WalletId;
@@ -24,7 +24,7 @@ public class TransactionUiViewModel
     public Currency Currency { get; }
     public string WalletName { get; }
     
-    public TransactionUiViewModel(TransactionDbModel dbModel, Currency currency, string walletName)
+    public TransactionUIViewModel(TransactionDBModel dbModel, Currency currency, string walletName)
     {
         WalletName = walletName;
         _dbModel = dbModel;

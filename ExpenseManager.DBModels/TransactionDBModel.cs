@@ -3,7 +3,7 @@ using ExpenseManager.Common.Enums;
 
 namespace ExpenseManager.DBModels;
 
-public class TransactionDbModel
+public class TransactionDBModel
 {
     // Id is only set once during creation.
     public Guid Id { get; }
@@ -18,9 +18,9 @@ public class TransactionDbModel
     // Date not modifiable due to being assigned at transaction creation time.
     public DateTime Date { get; }
 
-    public TransactionDbModel(Guid walletId, decimal amount, PaymentCategory paymentCategory, string description, DateTime date): 
+    public TransactionDBModel(Guid walletId, decimal amount, PaymentCategory paymentCategory, string description, DateTime date): 
         this(Guid.NewGuid(), walletId, amount, paymentCategory,description, date) {}
-    public TransactionDbModel(Guid id, Guid walletId, decimal amount, PaymentCategory paymentCategory, 
+    public TransactionDBModel(Guid id, Guid walletId, decimal amount, PaymentCategory paymentCategory, 
         string description, DateTime date)
     {
         Id = id;

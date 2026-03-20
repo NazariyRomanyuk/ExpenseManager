@@ -7,18 +7,18 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.UIModels.ViewModels;
 
-public class WalletUiViewModel : INotifyPropertyChanged
+public class WalletUIViewModel : INotifyPropertyChanged
 {
     private readonly IStorageService _storageService;
-    private readonly WalletDbModel _dbModel;
+    private readonly WalletDBModel _dbModel;
     // Transaction list nullable for being able to keep track of unloaded state.
-    private List<TransactionUiViewModel>? _transactions;
+    private List<TransactionUIViewModel>? _transactions;
 
     // Properties only have getters - view model has no access to setting.
     public Guid Id => _dbModel.Id;
     public string Name => _dbModel.Name;
     public Currency Currency => _dbModel.Currency;
-    public IReadOnlyList<TransactionUiViewModel>? Transactions => _transactions;
+    public IReadOnlyList<TransactionUIViewModel>? Transactions => _transactions;
 
     public decimal? WalletSum => _transactions?.Sum(t => t.Amount);
 
@@ -33,7 +33,7 @@ public class WalletUiViewModel : INotifyPropertyChanged
         }
     } 
 
-    public WalletUiViewModel(IStorageService storageService, WalletDbModel dbModel)
+    public WalletUIViewModel(IStorageService storageService, WalletDBModel dbModel)
     {
         _storageService = storageService;
         _dbModel = dbModel;
@@ -43,10 +43,10 @@ public class WalletUiViewModel : INotifyPropertyChanged
     public void LoadTransactions()
     {
         if (_transactions != null) return;
-        _transactions = new List<TransactionUiViewModel>();
+        _transactions = new List<TransactionUIViewModel>();
         foreach (var transaction in _storageService.GetTransactions(Id))
         {
-            _transactions.Add(new TransactionUiViewModel(transaction, Currency, Name));
+            _transactions.Add(new TransactionUIViewModel(transaction, Currency, Name));
         }
         OnPropertyChanged(nameof(SumDescription));
     }

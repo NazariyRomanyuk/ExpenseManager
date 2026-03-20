@@ -4,7 +4,7 @@ using ExpenseManager.DBModels;
 
 namespace ExpenseManager.UIModels.CreateModels;
 
-public class TransactionUiCreateModel
+public class TransactionUICreateModel
 {
     private readonly Guid _walletId;
     private decimal _amount;
@@ -41,14 +41,14 @@ public class TransactionUiCreateModel
         set => _date = value;
     }
 
-    public TransactionUiCreateModel(Guid walletId)
+    public TransactionUICreateModel(Guid walletId)
     {
         _walletId = walletId;
     }
 
-    public TransactionDbModel CreateDbModel ()
+    public TransactionDBModel CreateDbModel ()
     { 
-        return new TransactionDbModel(_walletId,  _amount, _paymentCategory, _description, _date);
+        return new TransactionDBModel(_walletId,  _amount, _paymentCategory, _description, _date);
     }
     
 }

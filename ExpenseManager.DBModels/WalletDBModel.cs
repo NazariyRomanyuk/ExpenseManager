@@ -3,7 +3,7 @@ using ExpenseManager.Common.Enums;
 
 namespace ExpenseManager.DBModels;
 
-public class WalletDbModel
+public class WalletDBModel
 {
     // Id is only set once during creation.
     public Guid Id { get; }
@@ -14,9 +14,9 @@ public class WalletDbModel
     public string OwnerFirstName { get; set; }
     public string OwnerLastName { get; set; }
 
-    public WalletDbModel(string name, Currency currency, string ownerFirstName, string ownerLastName) : 
+    public WalletDBModel(string name, Currency currency, string ownerFirstName, string ownerLastName) : 
         this(Guid.NewGuid(), name, currency,  ownerFirstName, ownerLastName) {}
-    public WalletDbModel(Guid id, string name, Currency currency, string ownerFirstName, string ownerLastName)
+    public WalletDBModel(Guid id, string name, Currency currency, string ownerFirstName, string ownerLastName)
     {
         Id = id;
         Name = name;

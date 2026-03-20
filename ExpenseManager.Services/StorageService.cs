@@ -5,8 +5,8 @@ namespace ExpenseManager.Services;
 public class StorageService : IStorageService
 {
     // Collections instantiated to suppress IntelliSense warnings.
-    private List<WalletDbModel> _wallets = new();
-    private List<TransactionDbModel> _transactions = new();
+    private List<WalletDBModel> _wallets = new();
+    private List<TransactionDBModel> _transactions = new();
     // Loaded flag added to track data instead of comparing with null.
     private bool _loaded;
 
@@ -22,25 +22,25 @@ public class StorageService : IStorageService
     // It is a copy however, and the elements of the collection are directly editable anyway due to being reference
     // types (which is ignored for the purposes of this lab), but it is good to give the user of the class a rough idea
     // of the intention.
-    public IEnumerable<TransactionDbModel> GetTransactions(Guid walletId)
+    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
     {
         LoadData();
         return _transactions.Where(t => t.WalletId == walletId);
     }
 
-    public IEnumerable<WalletDbModel> GetAllWallets()
+    public IEnumerable<WalletDBModel> GetAllWallets()
     {
         LoadData();
         return _wallets.ToList();
     }
 
-    public TransactionDbModel? GetTransaction(Guid transactionId)
+    public TransactionDBModel? GetTransaction(Guid transactionId)
     {
         LoadData();
         return _transactions.FirstOrDefault(w => w.Id == transactionId);
     }
 
-    public WalletDbModel? GetWallet(Guid walletId)
+    public WalletDBModel? GetWallet(Guid walletId)
     {
         LoadData();
         return _wallets.FirstOrDefault(w => w.Id == walletId);

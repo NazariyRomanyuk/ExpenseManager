@@ -11,29 +11,29 @@ public class Service : IService
     {
         _repository = repository;
     }
-    public IEnumerable<WalletListDto> GetAllWallets()
+    public IEnumerable<WalletListDTO> GetAllWallets()
     {
         foreach (var wallet in _repository.GetAllWallets())
         {
             var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-            yield return new WalletListDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
+            yield return new WalletListDTO(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
         }
     }
 
     // TODO: same as in storage, what to do if null?
-    public WalletDetailsDto GetWallet(Guid walletId)
+    public WalletDetailsDTO GetWallet(Guid walletId)
     {
         var wallet = _repository.GetWallet(walletId);
         var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-        return new WalletDetailsDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstName,  wallet.OwnerLastName);
+        return new WalletDetailsDTO(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
 
-    public IEnumerable<TransactionListDto> GetTransactions(Guid walletId)
+    public IEnumerable<TransactionListDTO> GetTransactions(Guid walletId)
     {
         foreach (var transaction in _repository.GetTransactions(walletId))
         {
             var walletCurrency = _repository.GetWallet(transaction.WalletId).Currency;
-            yield return new TransactionListDto(transaction.Id, transaction.Amount, walletCurrency, transaction.PaymentCategory);
+            yield return new TransactionListDTO(transaction.Id, transaction.Amount, walletCurrency, transaction.PaymentCategory);
         }
     }
 }

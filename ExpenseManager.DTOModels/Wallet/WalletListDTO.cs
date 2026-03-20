@@ -2,13 +2,13 @@
 
 namespace ExpenseManager.DTOModels.Wallet;
 
-public class WalletListDto
+public class WalletListDTO
 {
     public Guid Id { get; }
     public string Name { get; }
     public Currency Currency { get; }
     public decimal Amount { get; set; }
-    public WalletListDto(Guid id, string name, Currency currency, decimal amount)
+    public WalletListDTO(Guid id, string name, Currency currency, decimal amount)
     {
         Id = id;
         Name = name;

@@ -19,7 +19,7 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate
-                x:DataType="models:WalletListDto">
+                x:DataType="models:WalletListDTO">
                     <Border
                         Stroke="Green"
                         Padding="10"

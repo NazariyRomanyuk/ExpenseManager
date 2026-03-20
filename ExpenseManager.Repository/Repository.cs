@@ -10,22 +10,22 @@ public class Repository : IRepository
     {
         _storageContext = storageContext;
     }
-    public IEnumerable<WalletDbModel> GetAllWallets()
+    public IEnumerable<WalletDBModel> GetAllWallets()
     {
         return _storageContext.GetAllWallets();
     }
 
-    public IEnumerable<TransactionDbModel> GetTransactions(Guid walletId)
+    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
     {
         return _storageContext.GetTransactions(walletId);
     }
 
-    public WalletDbModel GetWallet(Guid walletId)
+    public WalletDBModel GetWallet(Guid walletId)
     {
         return _storageContext.GetWallet(walletId);
     }
 
-    public TransactionDbModel GetTransaction(Guid transactionId)
+    public TransactionDBModel GetTransaction(Guid transactionId)
     {
         return _storageContext.GetTransaction(transactionId);
     }

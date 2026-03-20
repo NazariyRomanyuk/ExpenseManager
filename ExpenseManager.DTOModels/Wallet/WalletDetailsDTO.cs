@@ -2,7 +2,7 @@
 
 namespace ExpenseManager.DTOModels.Wallet;
 
-public class WalletDetailsDto
+public class WalletDetailsDTO
 {
     public Guid Id { get; }
     public string Name { get; }
@@ -10,7 +10,7 @@ public class WalletDetailsDto
     public decimal Amount { get; set; }
     public string OwnerFirstName { get; }
     public string OwnerLastName { get; }
-    public WalletDetailsDto(Guid id, string name, Currency currency, decimal amount, string ownerFirstName, string ownerLastName)
+    public WalletDetailsDTO(Guid id, string name, Currency currency, decimal amount, string ownerFirstName, string ownerLastName)
     {
         Id = id;
         Name = name;

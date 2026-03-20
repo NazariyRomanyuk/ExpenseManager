@@ -4,8 +4,8 @@ namespace ExpenseManager.Services;
 
 public interface IStorageService
 {
-    public IEnumerable<TransactionDbModel> GetTransactions(Guid walletId);
-    public IEnumerable<WalletDbModel> GetAllWallets();
-    public TransactionDbModel? GetTransaction(Guid transactionId);
-    public WalletDbModel? GetWallet(Guid walletId);
+    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId);
+    public IEnumerable<WalletDBModel> GetAllWallets();
+    public TransactionDBModel? GetTransaction(Guid transactionId);
+    public WalletDBModel? GetWallet(Guid walletId);
 }

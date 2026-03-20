@@ -6,7 +6,7 @@ namespace ExpenseManagerConsole;
 internal class ConsoleApp
 {
     private static IStorageService _storageService;
-    private static List<WalletUiViewModel> _wallets;
+    private static List<WalletUIViewModel> _wallets;
     
     private static void Main(string[] args)
     {
@@ -54,10 +54,10 @@ internal class ConsoleApp
     private static void LoadWallets()
     {
         if (_wallets != null) return;
-        _wallets = new List<WalletUiViewModel>();
+        _wallets = new List<WalletUIViewModel>();
         foreach (var wallet in _storageService.GetAllWallets())
         {
-            _wallets.Add(new WalletUiViewModel( _storageService, wallet));
+            _wallets.Add(new WalletUIViewModel( _storageService, wallet));
         }
     }
 }

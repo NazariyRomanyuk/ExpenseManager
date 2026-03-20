@@ -2,10 +2,10 @@
 
 namespace ExpenseManager.UIModels.EditModels;
 
-public class WalletUiEditModel
+public class WalletUIEditModel
 {
     // Only the name, which is settable in the DB model present (+ Id).
-    private readonly WalletDbModel _dbModel;
+    private readonly WalletDBModel _dbModel;
     private string _name;
 
     public Guid Id => _dbModel.Id;
@@ -16,7 +16,7 @@ public class WalletUiEditModel
         set => _name = value;
     }
     
-    public WalletUiEditModel(WalletDbModel dbModel)
+    public WalletUIEditModel(WalletDBModel dbModel)
     {
         _dbModel = dbModel;
         _name = dbModel.Name;

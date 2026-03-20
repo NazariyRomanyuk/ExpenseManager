@@ -4,10 +4,10 @@ using ExpenseManager.DBModels;
 
 namespace ExpenseManager.UIModels.EditModels;
 
-public class TransactionUiEditModel
+public class TransactionUIEditModel
 {
     // Only fields that are settable in the DB model present (+ Id).
-    private readonly TransactionDbModel _dbModel;
+    private readonly TransactionDBModel _dbModel;
     private PaymentCategory _paymentCategory;
     private decimal _amount;
     private string _description;
@@ -32,7 +32,7 @@ public class TransactionUiEditModel
         set => _amount = value;
     }
     
-    public TransactionUiEditModel(TransactionDbModel dbModel)
+    public TransactionUIEditModel(TransactionDBModel dbModel)
     {
         _dbModel = dbModel;
         _paymentCategory = dbModel.PaymentCategory;

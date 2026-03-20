@@ -45,34 +45,34 @@ public class InMemoryStorageContext : IStorageContext
         _transactions.Add(new TransactionRecord(Guid.NewGuid(), usdWallet.Id, -199.99m, PaymentCategory.Shopping,
             "Geox payment", new DateTime(2026, 02, 05, 17, 38, 10)));
     }
-    public IEnumerable<TransactionDbModel> GetTransactions(Guid walletId)
+    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
     {
         foreach (var transaction in _transactions)
         {
             if (transaction.WalletId == walletId) 
-                yield return new TransactionDbModel(transaction.Id, transaction.WalletId, transaction.Amount, 
+                yield return new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
                     transaction.PaymentCategory, transaction.Description, transaction.Date);
         }
     }
 
-    public IEnumerable<WalletDbModel> GetAllWallets()
+    public IEnumerable<WalletDBModel> GetAllWallets()
     {
         foreach (var wallet in _wallets)
-            yield return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName,  wallet.OwnerLastName);
+            yield return new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
 
     // TODO: Deal with null return when Id is wrong
-    public TransactionDbModel GetTransaction(Guid transactionId)
+    public TransactionDBModel GetTransaction(Guid transactionId)
     {
         var transaction = _transactions.FirstOrDefault(w => w.Id == transactionId);
-        return new TransactionDbModel(transaction.Id, transaction.WalletId, transaction.Amount, 
+        return new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
             transaction.PaymentCategory, transaction.Description, transaction.Date);
     }
 
-    public WalletDbModel GetWallet(Guid walletId)
+    public WalletDBModel GetWallet(Guid walletId)
     {
         var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
-        return new WalletDbModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        return new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
     }
 
     public decimal GetAmountForWallet(Guid walletId)

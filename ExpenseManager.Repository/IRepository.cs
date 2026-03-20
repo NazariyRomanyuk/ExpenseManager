@@ -4,9 +4,9 @@ namespace LecturerManager.Repository;
 
 public interface IRepository
 {
-    IEnumerable<WalletDbModel> GetAllWallets();
-    IEnumerable<TransactionDbModel> GetTransactions(Guid walletId);
-    WalletDbModel GetWallet(Guid walletId);
-    TransactionDbModel GetTransaction(Guid transactionId);
+    IEnumerable<WalletDBModel> GetAllWallets();
+    IEnumerable<TransactionDBModel> GetTransactions(Guid walletId);
+    WalletDBModel GetWallet(Guid walletId);
+    TransactionDBModel GetTransaction(Guid transactionId);
     decimal GetAmountForWallet(Guid walletId);
 }

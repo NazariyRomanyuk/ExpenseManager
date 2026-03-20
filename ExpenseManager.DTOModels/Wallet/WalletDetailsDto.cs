@@ -8,13 +8,15 @@ public class WalletDetailsDto
     public string Name { get; }
     public Currency Currency { get; }
     public decimal Amount { get; set; }
-    public string OwnerFirstAndLastName { get; }
-    public WalletDetailsDto(Guid id, string name, Currency currency, decimal amount, string ownerFirstAndLastName)
+    public string OwnerFirstName { get; }
+    public string OwnerLastName { get; }
+    public WalletDetailsDto(Guid id, string name, Currency currency, decimal amount, string ownerFirstName, string ownerLastName)
     {
         Id = id;
         Name = name;
         Currency = currency;
         Amount = amount;
-        OwnerFirstAndLastName = ownerFirstAndLastName;
+        OwnerFirstName = ownerFirstName;
+        OwnerLastName = ownerLastName;
     }
 }

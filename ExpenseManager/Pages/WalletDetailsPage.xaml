@@ -17,8 +17,12 @@
                             Style="{StaticResource SubHeadline}"
                             Text="{Binding CurrentWallet.Name}">
                         </Label>
-                        <Label Text="{Binding CurrentWallet.OwnerFirstAndLastName, StringFormat='Owner: {0}'}"
-                               HorizontalOptions="Center">
+                        <Label HorizontalOptions="Center">
+                            <MultiBinding
+                                StringFormat="{}{0} {1}">
+                                <Binding Path="CurrentWallet.OwnerFirstName"></Binding>
+                                <Binding Path="CurrentWallet.OwnerLastName"></Binding>
+                            </MultiBinding>
                         </Label>
                         <Label
                             HorizontalOptions="Center">

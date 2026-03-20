@@ -25,7 +25,7 @@ public class Service : IService
     {
         var wallet = _repository.GetWallet(walletId);
         var walletAmount = _repository.GetAmountForWallet(wallet.Id);
-        return new WalletDetailsDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstAndLastName);
+        return new WalletDetailsDto(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
 
     public IEnumerable<TransactionListDto> GetTransactions(Guid walletId)

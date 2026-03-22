@@ -10,8 +10,7 @@ namespace ExpenseManager.ViewModels;
 public class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IService _service;
-    private TransactionDetailsDTO _currentTransaction;
-    // TODO: nullable?
+    private TransactionDetailsDTO _currentTransaction = null!;
     public decimal Amount => _currentTransaction.Amount;
     public Currency Currency => _currentTransaction.Currency;
     public PaymentCategory PaymentCategory => _currentTransaction.PaymentCategory;

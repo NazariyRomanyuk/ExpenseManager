@@ -1,5 +1,4 @@
-﻿using ExpenseManager.UIModels.ViewModels;
-using ExpenseManager.ViewModels;
+﻿using ExpenseManager.ViewModels;
 
 namespace ExpenseManager.Pages;
 

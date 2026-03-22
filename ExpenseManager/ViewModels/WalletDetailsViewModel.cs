@@ -14,12 +14,10 @@ namespace ExpenseManager.ViewModels;
 public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IService _service;
-    
-    [ObservableProperty]
-    public partial WalletDetailsDTO CurrentWallet {get; private set;}
 
-    [ObservableProperty]
-    public partial ObservableCollection<TransactionListDTO> Transactions { get; set; }
+    [ObservableProperty] public partial WalletDetailsDTO CurrentWallet { get; private set; } = null!;
+
+    [ObservableProperty] public partial ObservableCollection<TransactionListDTO> Transactions { get; set; } = null!;
 
     public WalletDetailsViewModel(IService service)
     {

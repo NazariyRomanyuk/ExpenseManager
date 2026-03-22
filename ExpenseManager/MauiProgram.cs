@@ -30,8 +30,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IRepository, Repository>();
         builder.Services.AddSingleton<IService, Service>();
         
-        builder.Services.AddSingleton<IStorageService, StorageService>();
-        
         builder.Services.AddTransient<WalletsPage>();
         builder.Services.AddTransient<WalletDetailsPage>();
         builder.Services.AddTransient<TransactionDetailsPage>();

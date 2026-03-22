@@ -2,6 +2,7 @@
 
 namespace ExpenseManager.Services;
 
+[Obsolete("Use InMemoryStorageContext instead.")]
 public class StorageService : IStorageService
 {
     // Collections instantiated to suppress IntelliSense warnings.

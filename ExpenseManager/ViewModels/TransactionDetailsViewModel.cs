@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ExpenseManager.Common.Enums;
+using ExpenseManager.Common.Exceptions;
 using ExpenseManager.DTOModels.Transaction;
 using ExpenseManager.DTOModels.Wallet;
 using ExpenseManager.Services;
 
 namespace ExpenseManager.ViewModels;
 
-public partial class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
+public class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IService _service;
     private TransactionDetailsDTO _currentTransaction;
@@ -27,7 +28,14 @@ public partial class TransactionDetailsViewModel : ObservableObject, IQueryAttri
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var transactionId = (Guid) query["transactionId"];
-        _currentTransaction = _service.GetTransaction(transactionId);
+        try
+        {
+            _currentTransaction = _service.GetTransaction(transactionId);
+        }
+        catch (EntityNotFoundException e)
+        {
+            Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
+        }
         OnPropertyChanged(nameof(Amount));
         OnPropertyChanged(nameof(Currency));
         OnPropertyChanged(nameof(PaymentCategory));

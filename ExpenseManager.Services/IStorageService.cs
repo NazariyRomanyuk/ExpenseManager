@@ -2,6 +2,7 @@
 
 namespace ExpenseManager.Services;
 
+[Obsolete("Use IStorageContext instead.")]
 public interface IStorageService
 {
     public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId);

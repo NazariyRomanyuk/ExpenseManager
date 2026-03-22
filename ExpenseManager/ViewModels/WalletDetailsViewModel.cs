@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExpenseManager.Common.Exceptions;
 using ExpenseManager.DTOModels.Transaction;
 using ExpenseManager.DTOModels.Wallet;
 using ExpenseManager.Pages;
@@ -28,7 +29,15 @@ public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributab
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var walletId = (Guid)query["WalletId"];
-        CurrentWallet = _service.GetWallet(walletId);
+        try
+        {
+            CurrentWallet = _service.GetWallet(walletId);
+        }
+        catch (EntityNotFoundException e)
+        {
+            Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
+            return;
+        }
         Transactions = new ObservableCollection<TransactionListDTO>(_service.GetTransactions(walletId));
         OnPropertyChanged(nameof(Transactions));
     }

@@ -20,12 +20,12 @@ public class Repository : IRepository
         return _storageContext.GetTransactions(walletId);
     }
 
-    public WalletDBModel GetWallet(Guid walletId)
+    public WalletDBModel? GetWallet(Guid walletId)
     {
         return _storageContext.GetWallet(walletId);
     }
 
-    public TransactionDBModel GetTransaction(Guid transactionId)
+    public TransactionDBModel? GetTransaction(Guid transactionId)
     {
         return _storageContext.GetTransaction(transactionId);
     }

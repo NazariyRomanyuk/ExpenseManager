@@ -60,19 +60,18 @@ public class InMemoryStorageContext : IStorageContext
         foreach (var wallet in _wallets)
             yield return new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
-
-    // TODO: Deal with null return when Id is wrong
-    public TransactionDBModel GetTransaction(Guid transactionId)
+    
+    public TransactionDBModel? GetTransaction(Guid transactionId)
     {
         var transaction = _transactions.FirstOrDefault(w => w.Id == transactionId);
-        return new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
+        return transaction is null ? null : new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
             transaction.PaymentCategory, transaction.Description, transaction.Date);
     }
 
-    public WalletDBModel GetWallet(Guid walletId)
+    public WalletDBModel? GetWallet(Guid walletId)
     {
         var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
-        return new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        return wallet is null ? null : new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
     }
 
     public decimal GetAmountForWallet(Guid walletId)

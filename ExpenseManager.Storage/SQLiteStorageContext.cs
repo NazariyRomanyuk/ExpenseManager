@@ -1,4 +1,6 @@
-﻿using ExpenseManager.DBModels;
+﻿using ExpenseManager.Common.Enums;
+using ExpenseManager.DBModels;
+using Microsoft.VisualBasic;
 using SQLite;
 
 namespace ExpenseManager.Storage;
@@ -6,15 +8,14 @@ namespace ExpenseManager.Storage;
 public class SQLiteStorageContext : IStorageContext
 {
     private SQLiteAsyncConnection? _connection;
-    private const string DatabaseName = "expense_manager.db";
-    private static string DatabasePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DatabaseName);
+    private const string DatabaseName = "expense_manager.db3";
+    private static string DatabasePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ExpenseManager", DatabaseName);
 
     private async Task Init()
     {
-        if (_connection != null) return;
+        if (_connection is not null) return;
         bool fileExists = File.Exists(DatabasePath);
-        if (!fileExists)
-            await CreateDummyStorage();
+        if (!fileExists) await CreateDummyStorage(); 
         else _connection = new SQLiteAsyncConnection(DatabasePath);
     }
 
@@ -27,32 +28,45 @@ public class SQLiteStorageContext : IStorageContext
         var inMemoryStorage = new InMemoryStorageContext();
         await _connection.CreateTableAsync<WalletDBModel>();
         await _connection.CreateTableAsync<TransactionDBModel>();
-        //await foreach (var wallet in inMemoryStorage.GetAllWallets())
-        
+        await foreach (var wallet in inMemoryStorage.GetAllWalletsAsync())
+        {
+            await _connection.InsertAsync(wallet);
+            await foreach(var transaction in inMemoryStorage.GetTransactionsAsync(wallet.Id))
+                await _connection.InsertAsync(transaction);
+        }
     }
 
-    public IAsyncEnumerable<TransactionDBModel> GetTransactionsAsync(Guid walletId)
+    public async IAsyncEnumerable<TransactionDBModel> GetTransactionsAsync(Guid walletId)
     {
-        throw new NotImplementedException();
+        await Init();
+        foreach (var transaction in await _connection!.Table<TransactionDBModel>().Where(x => x.WalletId == walletId).ToListAsync())
+            yield return transaction;
     }
 
-    public IAsyncEnumerable<WalletDBModel> GetAllWalletsAsync()
+    public async IAsyncEnumerable<WalletDBModel> GetAllWalletsAsync()
     {
-        throw new NotImplementedException();
+        await Init();
+        var all = await _connection!.Table<WalletDBModel>().ToListAsync();
+        foreach  (var wallet in all)
+            yield return wallet;
     }
 
-    public Task<TransactionDBModel?> GetTransactionAsync(Guid transactionId)
+    public async Task<TransactionDBModel?> GetTransactionAsync(Guid transactionId)
     {
-        throw new NotImplementedException();
+        await Init();
+        return await _connection!.Table<TransactionDBModel>().Where(x => x.Id == transactionId).FirstOrDefaultAsync();
     }
 
-    public Task<WalletDBModel?> GetWalletAsync(Guid walletId)
+    public async Task<WalletDBModel?> GetWalletAsync(Guid walletId)
     {
-        throw new NotImplementedException();
+        await Init();
+        return await _connection!.Table<WalletDBModel>().Where(x => x.Id == walletId).FirstOrDefaultAsync();
     }
 
-    public Task<decimal> GetAmountForWalletAsync(Guid walletId)
+    public async Task<decimal> GetAmountForWalletAsync(Guid walletId)
     {
-        throw new NotImplementedException();
+        await Init();
+        var transactions = await _connection!.Table<TransactionDBModel>().Where(x => x.WalletId == walletId).ToListAsync();
+        return transactions.Sum(transaction => transaction.Amount);
     }
 }

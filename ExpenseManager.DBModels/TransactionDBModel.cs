@@ -1,14 +1,16 @@
 ﻿using ExpenseManager.Common;
 using ExpenseManager.Common.Enums;
+using SQLite;
 
 namespace ExpenseManager.DBModels;
 
 public class TransactionDBModel
 {
     // Id is only set once during creation.
-    public Guid Id { get; }
+    [PrimaryKey]
+    public Guid Id { get; set; }
     // Transaction can only belong to one wallet after its instantiation.
-    public Guid WalletId { get; }
+    public Guid WalletId { get; set; }
     // Amount modifiable due to likely possible typos. Decimal for accurate monetary calculations.
     public decimal Amount { get; set; }
     // Category modifiable due to likely possible mishaps/changes in category logic.
@@ -16,7 +18,7 @@ public class TransactionDBModel
     // Description modifiable due to likely possible typos/mistakes.
     public string Description { get; set; }
     // Date not modifiable due to being assigned at transaction creation time.
-    public DateTime Date { get; }
+    public DateTime Date { get; set; }
 
     public TransactionDBModel(Guid walletId, decimal amount, PaymentCategory paymentCategory, string description, DateTime date): 
         this(Guid.NewGuid(), walletId, amount, paymentCategory,description, date) {}

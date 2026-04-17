@@ -36,25 +36,37 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         try
         {
             CurrentWallet = await _service.GetWalletAsync(_walletId);
+            Transactions = new ObservableCollection<TransactionListDTO>();
+            await foreach (var item in _service.GetTransactionsAsync(_walletId))
+                Transactions.Add(item);
         }
-        catch (EntityNotFoundException e)
+        catch (Exception e)
         {
             await Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
-            return;
         }
-        Transactions = new ObservableCollection<TransactionListDTO>();
-        await foreach (var item in _service.GetTransactionsAsync(_walletId))
-            Transactions.Add(item);
-        IsBusy = false;
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]
     private async Task LoadTransaction(Guid transactionId)
     {
         IsBusy = true;
-        await Shell.Current.GoToAsync($"{nameof(TransactionDetailsPage)}",
-            new Dictionary<string, object>{{ "transactionId", transactionId }});
-        IsBusy = false;
+        try
+        {
+            await Shell.Current.GoToAsync($"{nameof(TransactionDetailsPage)}",
+                new Dictionary<string, object> { { "transactionId", transactionId } });
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to load transaction details: {e.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
     
 }

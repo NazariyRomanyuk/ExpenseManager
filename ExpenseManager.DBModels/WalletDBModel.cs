@@ -1,16 +1,18 @@
 ﻿using ExpenseManager.Common;
 using ExpenseManager.Common.Enums;
+using SQLite;
 
 namespace ExpenseManager.DBModels;
 
 public class WalletDBModel
 {
     // Id is only set once during creation.
-    public Guid Id { get; }
+    [PrimaryKey]
+    public Guid Id { get; set; }
     // Name modifiable due to possible mistakes/changes.
     public string Name { get; set; }
     // Currency not modifiable due to breaking wallet sum calculation logic for transactions with different currencies.
-    public Currency Currency { get; }
+    public Currency Currency { get; set; }
     public string OwnerFirstName { get; set; }
     public string OwnerLastName { get; set; }
 

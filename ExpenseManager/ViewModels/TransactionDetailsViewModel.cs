@@ -36,18 +36,22 @@ public class TransactionDetailsViewModel : BaseViewModel, IQueryAttributable
         try
         {
             _currentTransaction = await _service.GetTransactionAsync(_id);
+            OnPropertyChanged(nameof(Amount));
+            OnPropertyChanged(nameof(Currency));
+            OnPropertyChanged(nameof(PaymentCategory));
+            OnPropertyChanged(nameof(Description));
+            OnPropertyChanged(nameof(Date));
+            OnPropertyChanged(nameof(IsExpense));
+            OnPropertyChanged(nameof(WalletName));
         }
-        catch (EntityNotFoundException e)
+        catch (Exception e)
         {
             await Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
         }
-        OnPropertyChanged(nameof(Amount));
-        OnPropertyChanged(nameof(Currency));
-        OnPropertyChanged(nameof(PaymentCategory));
-        OnPropertyChanged(nameof(Description));
-        OnPropertyChanged(nameof(Date));
-        OnPropertyChanged(nameof(IsExpense));
-        OnPropertyChanged(nameof(WalletName));
-        IsBusy = false;
+        finally
+        {
+            IsBusy = false;
+        }
+        
     }
 }

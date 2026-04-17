@@ -25,17 +25,39 @@ public partial class WalletsViewModel : BaseViewModel
     internal async Task Refresh()
     {
         IsBusy = true;
-        Wallets = new ObservableCollection<WalletListDTO>();
-        await foreach (var wallet in _service.GetAllWalletsAsync())
-            Wallets.Add(wallet);
-        IsBusy = false;
+        try
+        {
+            Wallets = new ObservableCollection<WalletListDTO>();
+            await foreach (var wallet in _service.GetAllWalletsAsync())
+                Wallets.Add(wallet);
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
     
     [RelayCommand]
     private async Task LoadWallet()
     {
         IsBusy = true;
-        await Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}", new Dictionary<string, object>{{"WalletId", CurrentWallet.Id}});
-        IsBusy = false;
+        try
+        {
+            await Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}",
+                new Dictionary<string, object> { { "WalletId", CurrentWallet.Id } });
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to load wallet details: {e.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+        
     }
 }

@@ -26,7 +26,7 @@ public static class MauiProgram
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-        builder.Services.AddSingleton<IStorageContext, InMemoryStorageContext>();
+        builder.Services.AddSingleton<IStorageContext, SQLiteStorageContext>();
         builder.Services.AddSingleton<IRepository, Repository>();
         builder.Services.AddSingleton<IService, Service>();
         

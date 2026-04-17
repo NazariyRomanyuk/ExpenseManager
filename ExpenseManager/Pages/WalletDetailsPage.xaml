@@ -81,6 +81,16 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <BoxView
+                IsVisible="{Binding IsBusy}"
+                BackgroundColor="DarkGray"
+                Opacity="0.1"/>
+            <ActivityIndicator
+                Color="Lime"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

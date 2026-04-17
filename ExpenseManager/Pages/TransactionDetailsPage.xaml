@@ -6,64 +6,77 @@
              x:Class="ExpenseManager.Pages.TransactionDetailsPage"
              x:DataType="viewmodels:TransactionDetailsViewModel"
              Title="Transaction Details" IsEnabled="{Binding IsNotBusy}">
+
     <ContentPage.Content>
-        <ScrollView>
-            <VerticalStackLayout
-                Padding = "10,20"
-                Spacing="10">
-                    <Label
-                        Text="Amount"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label Margin="10,0" HorizontalOptions="Center">
-                        <MultiBinding
-                            StringFormat="{}{0} {1}">
-                            <Binding Path="Amount"></Binding>
-                            <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
-                        </MultiBinding>
-                    </Label>
-                    <Label
-                        Text="Payment Category"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label
-                        Text="{Binding PaymentCategory, Converter={StaticResource EnumToDisplayConverter}}"
-                        Margin="10,0"
-                        HorizontalOptions="Center"></Label>
-                    <Label
-                        Text="Description"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label
-                        Text="{Binding Description}"
-                        Margin="10,0"
-                        HorizontalOptions="Center"></Label>
-                    <Label
-                        Text="Date"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label
-                        Text="{Binding Date, StringFormat='{0:dd MMMM yyyy, hh:mm:ss}'}"
-                        Margin="10,0"
-                        HorizontalOptions="Center"></Label>
-                    <Label
-                        Text="Is Expense?"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label
-                        Text="{Binding IsExpense}"
-                        Margin="10,0"
-                        HorizontalOptions="Center"></Label>
-                    <Label
-                        Text="Wallet"
-                        Style="{StaticResource SubHeadline}"
-                        FontFamily="QuicksandBold"/>
-                    <Label
-                        Text="{Binding WalletName}"
-                        Margin="10,0"
-                        HorizontalOptions="Center"></Label>
-                    
-            </VerticalStackLayout>
-        </ScrollView>
+        <Grid>
+            <ScrollView>
+                <VerticalStackLayout
+                    Padding = "10,20"
+                    Spacing="10">
+                        <Label
+                            Text="Amount"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label Margin="10,0" HorizontalOptions="Center">
+                            <MultiBinding
+                                StringFormat="{}{0} {1}">
+                                <Binding Path="Amount"></Binding>
+                                <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                            </MultiBinding>
+                        </Label>
+                        <Label
+                            Text="Payment Category"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label
+                            Text="{Binding PaymentCategory, Converter={StaticResource EnumToDisplayConverter}}"
+                            Margin="10,0"
+                            HorizontalOptions="Center"></Label>
+                        <Label
+                            Text="Description"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label
+                            Text="{Binding Description}"
+                            Margin="10,0"
+                            HorizontalOptions="Center"></Label>
+                        <Label
+                            Text="Date"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label
+                            Text="{Binding Date, StringFormat='{0:dd MMMM yyyy, hh:mm:ss}'}"
+                            Margin="10,0"
+                            HorizontalOptions="Center"></Label>
+                        <Label
+                            Text="Is Expense?"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label
+                            Text="{Binding IsExpense}"
+                            Margin="10,0"
+                            HorizontalOptions="Center"></Label>
+                        <Label
+                            Text="Wallet"
+                            Style="{StaticResource SubHeadline}"
+                            FontFamily="QuicksandBold"/>
+                        <Label
+                            Text="{Binding WalletName}"
+                            Margin="10,0"
+                            HorizontalOptions="Center"></Label>
+                        
+                </VerticalStackLayout>
+            </ScrollView>
+            <BoxView
+                IsVisible="{Binding IsBusy}"
+                BackgroundColor="DarkGray"
+                Opacity="0.1"/>
+            <ActivityIndicator
+                Color="Lime"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

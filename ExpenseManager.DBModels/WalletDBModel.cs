@@ -24,4 +24,5 @@ public class WalletDBModel
         OwnerFirstName = ownerFirstName;
         OwnerLastName = ownerLastName;
     }
+    public WalletDBModel() {}
 }

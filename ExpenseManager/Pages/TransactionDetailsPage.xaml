@@ -5,7 +5,7 @@
              xmlns:viewmodels="clr-namespace:ExpenseManager.ViewModels"
              x:Class="ExpenseManager.Pages.TransactionDetailsPage"
              x:DataType="viewmodels:TransactionDetailsViewModel"
-             Title="Transaction Details">
+             Title="Transaction Details" IsEnabled="{Binding IsNotBusy}">
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout

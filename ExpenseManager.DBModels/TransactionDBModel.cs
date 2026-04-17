@@ -30,5 +30,5 @@ public class TransactionDBModel
         Description = description;
         Date = date;
     }
-    
+    public TransactionDBModel() {}
 }

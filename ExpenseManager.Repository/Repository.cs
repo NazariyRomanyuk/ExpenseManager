@@ -10,28 +10,28 @@ public class Repository : IRepository
     {
         _storageContext = storageContext;
     }
-    public IEnumerable<WalletDBModel> GetAllWallets()
+    public IAsyncEnumerable<WalletDBModel> GetAllWalletsAsync()
     {
-        return _storageContext.GetAllWallets();
+        return _storageContext.GetAllWalletsAsync();
     }
 
-    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
+    public IAsyncEnumerable<TransactionDBModel> GetTransactionsAsync(Guid walletId)
     {
-        return _storageContext.GetTransactions(walletId);
+        return _storageContext.GetTransactionsAsync(walletId);
     }
 
-    public WalletDBModel? GetWallet(Guid walletId)
+    public Task<WalletDBModel?> GetWalletAsync(Guid walletId)
     {
-        return _storageContext.GetWallet(walletId);
+        return _storageContext.GetWalletAsync(walletId);
     }
 
-    public TransactionDBModel? GetTransaction(Guid transactionId)
+    public Task<TransactionDBModel?> GetTransactionAsync(Guid transactionId)
     {
-        return _storageContext.GetTransaction(transactionId);
+        return _storageContext.GetTransactionAsync(transactionId);
     }
 
-    public decimal GetAmountForWallet(Guid walletId)
+    public Task<decimal> GetAmountForWalletAsync(Guid walletId)
     {
-        return _storageContext.GetAmountForWallet(walletId);
+        return _storageContext.GetAmountForWalletAsync(walletId);
     }
 }

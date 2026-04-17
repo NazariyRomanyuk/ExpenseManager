@@ -6,9 +6,9 @@ namespace ExpenseManager.Services;
 
 public interface IService
 {
-    IEnumerable<WalletListDTO> GetAllWallets();
-    WalletDetailsDTO GetWallet(Guid walletId);
-    IEnumerable<TransactionListDTO> GetTransactions(Guid walletId);
-    TransactionDetailsDTO GetTransaction(Guid transactionId);
+    IAsyncEnumerable<WalletListDTO> GetAllWalletsAsync();
+    Task<WalletDetailsDTO> GetWalletAsync(Guid walletId);
+    IAsyncEnumerable<TransactionListDTO> GetTransactionsAsync(Guid walletId);
+    Task<TransactionDetailsDTO> GetTransactionAsync(Guid transactionId);
     
 }

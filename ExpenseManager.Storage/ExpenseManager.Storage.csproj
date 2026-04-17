@@ -10,4 +10,9 @@
       <ProjectReference Include="..\ExpenseManager.DBModels\ExpenseManager.DBModels.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="SQLite" Version="3.13.0" />
+      <PackageReference Include="sqlite-net-pcl" Version="1.10.196-beta" />
+    </ItemGroup>
+
 </Project>

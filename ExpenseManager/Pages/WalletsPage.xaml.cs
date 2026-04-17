@@ -6,9 +6,14 @@ namespace ExpenseManager.Pages;
 
 public partial class WalletsPage : ContentPage
 {
+    private WalletsViewModel _viewModel;
     public WalletsPage(WalletsViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = _viewModel = viewModel;
+    }
+    protected override async void OnAppearing()
+    {
+        await _viewModel.Refresh();
     }
 }

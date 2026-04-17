@@ -7,10 +7,11 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.ViewModels;
 
-public class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
+public class TransactionDetailsViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IService _service;
     private TransactionDetailsDTO _currentTransaction = null!;
+    private Guid _id;
     public decimal Amount => _currentTransaction.Amount;
     public Currency Currency => _currentTransaction.Currency;
     public PaymentCategory PaymentCategory => _currentTransaction.PaymentCategory;
@@ -26,14 +27,19 @@ public class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var transactionId = (Guid) query["transactionId"];
+        _id = (Guid) query["transactionId"];
+    }
+
+    internal async Task Refresh()
+    {
+        IsBusy = true;
         try
         {
-            _currentTransaction = _service.GetTransaction(transactionId);
+            _currentTransaction = await _service.GetTransactionAsync(_id);
         }
         catch (EntityNotFoundException e)
         {
-            Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
         }
         OnPropertyChanged(nameof(Amount));
         OnPropertyChanged(nameof(Currency));
@@ -42,5 +48,6 @@ public class TransactionDetailsViewModel : ObservableObject, IQueryAttributable
         OnPropertyChanged(nameof(Date));
         OnPropertyChanged(nameof(IsExpense));
         OnPropertyChanged(nameof(WalletName));
+        IsBusy = false;
     }
 }

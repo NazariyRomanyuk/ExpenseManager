@@ -12,35 +12,35 @@ public class Service : IService
     {
         _repository = repository;
     }
-    public IEnumerable<WalletListDTO> GetAllWallets()
+    public async IAsyncEnumerable<WalletListDTO> GetAllWalletsAsync()
     {
-        foreach (var wallet in _repository.GetAllWallets())
+        await foreach (var wallet in _repository.GetAllWalletsAsync())
         {
-            var walletAmount = _repository.GetAmountForWallet(wallet.Id);
+            var walletAmount = await _repository.GetAmountForWalletAsync(wallet.Id);
             yield return new WalletListDTO(wallet.Id, wallet.Name, wallet.Currency, walletAmount);
         }
     }
     
-    public WalletDetailsDTO GetWallet(Guid walletId)
+    public async Task<WalletDetailsDTO> GetWalletAsync(Guid walletId)
     {
-        var wallet = _repository.GetWallet(walletId) ?? throw new EntityNotFoundException("Wallet", walletId);
-        var walletAmount = _repository.GetAmountForWallet(wallet.Id);
+        var wallet = await _repository.GetWalletAsync(walletId) ?? throw new EntityNotFoundException("Wallet", walletId);
+        var walletAmount = await _repository.GetAmountForWalletAsync(wallet.Id);
         return new WalletDetailsDTO(wallet.Id, wallet.Name, wallet.Currency, walletAmount, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
 
-    public IEnumerable<TransactionListDTO> GetTransactions(Guid walletId)
+    public async IAsyncEnumerable<TransactionListDTO> GetTransactionsAsync(Guid walletId)
     {
-        foreach (var transaction in _repository.GetTransactions(walletId))
+        await foreach (var transaction in _repository.GetTransactionsAsync(walletId))
         {
-            var wallet = _repository.GetWallet(transaction.WalletId) ??  throw new EntityNotFoundException("Wallet", transaction.WalletId);
+            var wallet = await _repository.GetWalletAsync(transaction.WalletId) ??  throw new EntityNotFoundException("Wallet", transaction.WalletId);
             yield return new TransactionListDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory);
         }
     }
 
-    public TransactionDetailsDTO GetTransaction(Guid transactionId)
+    public async Task<TransactionDetailsDTO> GetTransactionAsync(Guid transactionId)
     {
-        var transaction = _repository.GetTransaction(transactionId) ?? throw new EntityNotFoundException("Transaction", transactionId);
-        var wallet = _repository.GetWallet(transaction.WalletId) ?? throw new EntityNotFoundException("Wallet", transaction.WalletId);
+        var transaction = await _repository.GetTransactionAsync(transactionId) ?? throw new EntityNotFoundException("Transaction", transactionId);
+        var wallet = await _repository.GetWalletAsync(transaction.WalletId) ?? throw new EntityNotFoundException("Wallet", transaction.WalletId);
         return new TransactionDetailsDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory, transaction.Description, 
             transaction.Date, wallet.Name);
     }

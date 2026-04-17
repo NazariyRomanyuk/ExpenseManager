@@ -45,37 +45,54 @@ public class InMemoryStorageContext : IStorageContext
         _transactions.Add(new TransactionRecord(Guid.NewGuid(), usdWallet.Id, -199.99m, PaymentCategory.Shopping,
             "Geox payment", new DateTime(2026, 02, 05, 17, 38, 10)));
     }
-    public IEnumerable<TransactionDBModel> GetTransactions(Guid walletId)
+    public async IAsyncEnumerable<TransactionDBModel> GetTransactionsAsync(Guid walletId)
     {
         foreach (var transaction in _transactions)
         {
+            await Task.Delay(100);
             if (transaction.WalletId == walletId) 
                 yield return new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
                     transaction.PaymentCategory, transaction.Description, transaction.Date);
         }
     }
 
-    public IEnumerable<WalletDBModel> GetAllWallets()
+    public async IAsyncEnumerable<WalletDBModel> GetAllWalletsAsync()
     {
+        await Task.Delay(100);
         foreach (var wallet in _wallets)
             yield return new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName,  wallet.OwnerLastName);
     }
     
-    public TransactionDBModel? GetTransaction(Guid transactionId)
+    public Task<TransactionDBModel?> GetTransactionAsync(Guid transactionId)
     {
-        var transaction = _transactions.FirstOrDefault(w => w.Id == transactionId);
-        return transaction is null ? null : new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, 
-            transaction.PaymentCategory, transaction.Description, transaction.Date);
+        return Task.Run(() =>
+        {
+            var transaction = _transactions.FirstOrDefault(w => w.Id == transactionId);
+            return transaction is null
+                ? null
+                : new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount,
+                    transaction.PaymentCategory, transaction.Description, transaction.Date);
+        });
     }
 
-    public WalletDBModel? GetWallet(Guid walletId)
+    public Task<WalletDBModel?> GetWalletAsync(Guid walletId)
     {
-        var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
-        return wallet is null ? null : new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        return Task.Run(() =>
+        {
+            var wallet = _wallets.FirstOrDefault(w => w.Id == walletId);
+            return wallet is null
+                ? null
+                : new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName,
+                    wallet.OwnerLastName);
+        });
     }
 
-    public decimal GetAmountForWallet(Guid walletId)
+    public Task<decimal> GetAmountForWalletAsync(Guid walletId)
     {
-        return _transactions.Where(transaction => transaction.WalletId == walletId).Sum(transaction => transaction.Amount);
+        return Task.Run(() =>
+        {
+            return _transactions.Where(transaction => transaction.WalletId == walletId)
+                .Sum(transaction => transaction.Amount);
+        });
     }
 }

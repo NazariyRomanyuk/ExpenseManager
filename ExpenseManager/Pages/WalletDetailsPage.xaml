@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:ExpenseManager.ViewModels"
              x:Class="ExpenseManager.Pages.WalletDetailsPage"
              x:DataType="viewModels:WalletDetailsViewModel"
-             Title = "Wallet Details">
+             Title = "Wallet Details" IsEnabled="{Binding IsNotBusy}">
     <ContentPage.Content>
         
         <Grid RowDefinitions="Auto, *">

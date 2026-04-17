@@ -4,9 +4,9 @@ namespace LecturerManager.Repository;
 
 public interface IRepository
 {
-    IEnumerable<WalletDBModel> GetAllWallets();
-    IEnumerable<TransactionDBModel> GetTransactions(Guid walletId);
-    WalletDBModel? GetWallet(Guid walletId);
-    TransactionDBModel? GetTransaction(Guid transactionId);
-    decimal GetAmountForWallet(Guid walletId);
+    IAsyncEnumerable<WalletDBModel> GetAllWalletsAsync();
+    IAsyncEnumerable<TransactionDBModel> GetTransactionsAsync(Guid walletId);
+    Task<WalletDBModel?> GetWalletAsync(Guid walletId);
+    Task<TransactionDBModel?> GetTransactionAsync(Guid transactionId);
+    Task<decimal> GetAmountForWalletAsync(Guid walletId);
 }

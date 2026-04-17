@@ -5,13 +5,13 @@
              xmlns:models="clr-namespace:ExpenseManager.DTOModels.Wallet;assembly=ExpenseManager.DTOModels"
              x:Class="ExpenseManager.Pages.WalletsPage"             
              x:DataType="viewmodels:WalletsViewModel"
-             Title="Wallets">
+             Title="Wallets" IsEnabled="{Binding IsNotBusy}">
     <CollectionView
         ItemsSource="{Binding Wallets}"
         Margin="10"
         SelectionMode="Single"
         SelectedItem="{Binding CurrentWallet}"
-        SelectionChangedCommand="{Binding WalletSelected}">
+        SelectionChangedCommand="{Binding LoadWalletCommand}">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout 
                 Orientation="Vertical" 

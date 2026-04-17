@@ -1,26 +1,41 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ExpenseManager.DTOModels.Wallet;
 using ExpenseManager.Services;
 using ExpenseManager.Pages;
 
 namespace ExpenseManager.ViewModels;
 
-public class WalletsViewModel
+public partial class WalletsViewModel : BaseViewModel
 {
     private readonly IService _service;
-    public ObservableCollection<WalletListDTO> Wallets { get; set; }
-    public WalletListDTO CurrentWallet { get; set; }
-    public Command WalletSelected { get; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<WalletListDTO> Wallets { get; set; }
+
+    [ObservableProperty]
+    public partial WalletListDTO CurrentWallet { get; set; }
 
     public WalletsViewModel(IService service)
     {
         _service = service;
-        Wallets = new ObservableCollection<WalletListDTO>(_service.GetAllWallets());
-        WalletSelected = new Command(LoadWallet);
+    }
+
+    internal async Task Refresh()
+    {
+        IsBusy = true;
+        Wallets = new ObservableCollection<WalletListDTO>();
+        await foreach (var wallet in _service.GetAllWalletsAsync())
+            Wallets.Add(wallet);
+        IsBusy = false;
     }
     
-    private void LoadWallet()
+    [RelayCommand]
+    private async Task LoadWallet()
     {
-        Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}", new Dictionary<string, object>{{"WalletId", CurrentWallet.Id}});
+        IsBusy = true;
+        await Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}", new Dictionary<string, object>{{"WalletId", CurrentWallet.Id}});
+        IsBusy = false;
     }
 }

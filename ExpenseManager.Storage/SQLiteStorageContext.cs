@@ -69,4 +69,40 @@ public class SQLiteStorageContext : IStorageContext
         var transactions = await _connection!.Table<TransactionDBModel>().Where(x => x.WalletId == walletId).ToListAsync();
         return transactions.Sum(transaction => transaction.Amount);
     }
+
+    public async Task AddWalletAsync(WalletDBModel wallet)
+    {
+        await Init();
+        await _connection!.InsertAsync(wallet);
+    }
+
+    public async Task DeleteWalletAsync(Guid walletId)
+    {
+        await Init();
+        await _connection!.DeleteAsync(walletId);
+    }
+
+    public async Task UpdateWalletAsync(WalletDBModel wallet)
+    {
+        await Init();
+        await _connection!.UpdateAsync(wallet);
+    }
+
+    public async Task AddTransactionAsync(TransactionDBModel transaction)
+    {
+        await Init();
+        await _connection!.InsertAsync(transaction);
+    }
+
+    public async Task DeleteTransactionAsync(Guid transactionId)
+    {
+        await Init();
+        await _connection!.DeleteAsync(transactionId);
+    }
+
+    public async Task UpdateTransactionAsync(TransactionDBModel transaction)
+    {
+        await Init();
+        await _connection!.UpdateAsync(transaction);
+    }
 }

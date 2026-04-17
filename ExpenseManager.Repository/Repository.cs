@@ -34,4 +34,34 @@ public class Repository : IRepository
     {
         return _storageContext.GetAmountForWalletAsync(walletId);
     }
+
+    public Task AddWalletAsync(WalletDBModel wallet)
+    {
+        return _storageContext.AddWalletAsync(wallet);
+    }
+
+    public Task UpdateWalletAsync(WalletDBModel wallet)
+    {
+        return _storageContext.UpdateWalletAsync(wallet);
+    }
+
+    public Task DeleteWalletAsync(Guid walletId)
+    {
+        return _storageContext.DeleteWalletAsync(walletId);
+    }
+
+    public Task AddTransactionAsync(TransactionDBModel transaction)
+    {
+        return _storageContext.AddTransactionAsync(transaction);
+    }
+
+    public Task UpdateTransactionAsync(TransactionDBModel transaction)
+    {
+        return _storageContext.UpdateTransactionAsync(transaction);
+    }
+
+    public Task DeleteTransactionAsync(Guid transactionId)
+    {
+        return _storageContext.DeleteTransactionAsync(transactionId);
+    }
 }

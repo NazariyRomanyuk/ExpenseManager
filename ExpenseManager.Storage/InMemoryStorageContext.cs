@@ -95,4 +95,34 @@ public class InMemoryStorageContext : IStorageContext
                 .Sum(transaction => transaction.Amount);
         });
     }
+
+    public Task AddWalletAsync(WalletDBModel wallet)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteWalletAsync(Guid walletId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateWalletAsync(WalletDBModel wallet)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task AddTransactionAsync(TransactionDBModel transaction)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteTransactionAsync(Guid transactionId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateTransactionAsync(TransactionDBModel transaction)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -2,4 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:converters="clr-namespace:ExpenseManager.Tools.Converters">
     <converters:EnumToDisplayConverter x:Key="EnumToDisplayConverter"/>
+    <converters:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTimeConverter"></converters:DateOnlyToDateTimeConverter>
+    <converters:StringToBoolConverter x:Key="StringToBoolConverter"></converters:StringToBoolConverter>
 </ResourceDictionary>

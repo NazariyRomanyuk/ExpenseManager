@@ -34,6 +34,8 @@ public class Repository : IRepository
     {
         return _storageContext.GetAmountForWalletAsync(walletId);
     }
+    
+    // Return or async???
 
     public Task AddWalletAsync(WalletDBModel wallet)
     {

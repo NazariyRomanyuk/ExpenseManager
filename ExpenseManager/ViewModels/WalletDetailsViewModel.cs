@@ -69,4 +69,22 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         }
     }
     
+    [RelayCommand]
+    private async Task AddTransaction()
+    {
+        IsBusy = true;
+        try
+        {
+            await Shell.Current.GoToAsync($"{nameof(TransactionCreatePage)}", new Dictionary<string, object> { { nameof(TransactionCreateDTO.WalletId), _walletId } });
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to navigate to transaction create page: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
 }

@@ -1,4 +1,6 @@
-﻿using ExpenseManager.Common.Exceptions;
+﻿using System.ComponentModel.DataAnnotations;
+using ExpenseManager.Common.Exceptions;
+using ExpenseManager.DBModels;
 using ExpenseManager.DTOModels.Transaction;
 using ExpenseManager.DTOModels.Wallet;
 using LecturerManager.Repository;
@@ -43,5 +45,45 @@ public class Service : IService
         var wallet = await _repository.GetWalletAsync(transaction.WalletId) ?? throw new EntityNotFoundException("Wallet", transaction.WalletId);
         return new TransactionDetailsDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory, transaction.Description, 
             transaction.Date, wallet.Name);
+    }
+
+    public async Task CreateWalletAsync(WalletCreateDTO wallet)
+    {
+        var walletDbModel = new WalletDBModel(wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        await _repository.AddWalletAsync(walletDbModel);
+    }
+
+    // Should it be the same? Maybe rename the DTO?
+    public async Task UpdateWalletAsync(WalletCreateDTO wallet)
+    {
+        var walletDbModel = new WalletDBModel(wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        await _repository.UpdateWalletAsync(walletDbModel);
+    }
+
+    public Task DeleteWalletAsync(Guid walletId)
+    {
+        return _repository.DeleteWalletAsync(walletId);
+    }
+
+    public async Task CreateTransactionAsync(TransactionCreateDTO transaction)
+    {
+        var errors = transaction.Validate();
+        if (errors.Count > 0)
+            throw new ValidationException(string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage)));
+        var transactionDbModel = new TransactionDBModel(transaction.WalletId, transaction.Amount, transaction.PaymentCategory, 
+            transaction.Description, transaction.Date);
+        await _repository.AddTransactionAsync(transactionDbModel);
+    }
+
+    public async Task UpdateTransactionAsync(TransactionCreateDTO transaction)
+    {
+        var transactionDbModel = new TransactionDBModel(transaction.WalletId, transaction.Amount, transaction.PaymentCategory, 
+            transaction.Description, transaction.Date);
+        await _repository.UpdateTransactionAsync(transactionDbModel);
+    }
+
+    public Task DeleteTransactionAsync(Guid transactionId)
+    {
+        return _repository.DeleteTransactionAsync(transactionId);
     }
 }

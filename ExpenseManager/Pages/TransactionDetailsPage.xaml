@@ -25,7 +25,7 @@
                             </MultiBinding>
                         </Label>
                         <Label
-                            Text="Payment Category"
+                            Text="Payment PaymentCategory"
                             Style="{StaticResource SubHeadline}"
                             FontFamily="QuicksandBold"/>
                         <Label
@@ -45,7 +45,7 @@
                             Style="{StaticResource SubHeadline}"
                             FontFamily="QuicksandBold"/>
                         <Label
-                            Text="{Binding Date, StringFormat='{0:dd MMMM yyyy, hh:mm:ss}'}"
+                            Text="{Binding Date, StringFormat='{0:dd MMMM yyyy, HH:mm:ss}'}"
                             Margin="10,0"
                             HorizontalOptions="Center"></Label>
                         <Label

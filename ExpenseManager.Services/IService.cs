@@ -10,5 +10,11 @@ public interface IService
     Task<WalletDetailsDTO> GetWalletAsync(Guid walletId);
     IAsyncEnumerable<TransactionListDTO> GetTransactionsAsync(Guid walletId);
     Task<TransactionDetailsDTO> GetTransactionAsync(Guid transactionId);
+    Task CreateWalletAsync(WalletCreateDTO wallet);
+    Task UpdateWalletAsync(WalletCreateDTO wallet);
+    Task DeleteWalletAsync(Guid walletId);
+    Task CreateTransactionAsync(TransactionCreateDTO transaction);
+    Task UpdateTransactionAsync(TransactionCreateDTO transaction);
+    Task DeleteTransactionAsync(Guid transactionId);
     
 }

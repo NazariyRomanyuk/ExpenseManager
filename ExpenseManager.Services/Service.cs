@@ -52,11 +52,10 @@ public class Service : IService
         var walletDbModel = new WalletDBModel(wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
         await _repository.AddWalletAsync(walletDbModel);
     }
-
-    // Should it be the same? Maybe rename the DTO?
-    public async Task UpdateWalletAsync(WalletCreateDTO wallet)
+    
+    public async Task UpdateWalletAsync(WalletEditDTO wallet)
     {
-        var walletDbModel = new WalletDBModel(wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
+        var walletDbModel = new WalletDBModel(wallet.Id, wallet.Name, wallet.Currency, wallet.OwnerFirstName, wallet.OwnerLastName);
         await _repository.UpdateWalletAsync(walletDbModel);
     }
 
@@ -67,9 +66,6 @@ public class Service : IService
 
     public async Task CreateTransactionAsync(TransactionCreateDTO transaction)
     {
-        var errors = transaction.Validate();
-        if (errors.Count > 0)
-            throw new ValidationException(string.Join(Environment.NewLine, errors.Select(s => s.ErrorMessage)));
         var transactionDbModel = new TransactionDBModel(transaction.WalletId, transaction.Amount, transaction.PaymentCategory, 
             transaction.Description, transaction.Date);
         await _repository.AddTransactionAsync(transactionDbModel);

@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Common.Enums;
 using ExpenseManager.DTOModels.Transaction;
+using ExpenseManager.DTOModels.Wallet;
 
 namespace ExpenseManager.Services;
 
@@ -44,7 +45,7 @@ public static class Validators
                 errors.Add(new ValidationError($"{displayName} must be at least 2 characters long.", propertyName));
                 break;
             case > 100:
-                errors.Add(new ValidationError($"{displayName} must be at less than 100 characters long.", propertyName));
+                errors.Add(new ValidationError($"{displayName} must be at less than or equal to 100 characters long.", propertyName));
                 break;
         }
         return errors;
@@ -59,5 +60,71 @@ public static class Validators
             errors.Add(new ValidationError($"{displayName} cannot be in the future.", propertyName));
         return errors;
     }
+    
+    public static List<ValidationError> Validate(this WalletCreateDTO potentialWallet)
+    {
+        var errors = new List<ValidationError>();
+        errors.AddRange(ValidateWallet(potentialWallet.Name, potentialWallet.Currency, potentialWallet.OwnerFirstName,
+            potentialWallet.OwnerLastName));
+         return errors;
+    }
+    
+    public static List<ValidationError> ValidateWallet(string name, Currency? currency, string ownerFirstName, string ownerLastName)
+    {
+        var errors = new List<ValidationError>();
+        if (currency is null)
+            errors.Add(new ValidationError("Currency is required.", nameof(WalletCreateDTO.Currency)));
+        errors.AddRange(ValidateWalletName(name, nameof(WalletCreateDTO.Name), "Wallet Name"));
+        errors.AddRange(ValidatePersonName(ownerFirstName, nameof(WalletCreateDTO.OwnerFirstName), "Owner First Name"));
+        errors.AddRange(ValidatePersonName(ownerLastName, nameof(WalletCreateDTO.OwnerLastName), "Owner Last Name"));
+        return errors;
+    }
+    
+    public static List<ValidationError> ValidatePersonName(string name, string propertyName, string displayName)
+    {
+        var errors = new List<ValidationError>();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            errors.Add(new ValidationError($"{displayName} is required.", propertyName));
+            return errors;
+        }
+        switch (name.Length)
+        {
+            case < 2:
+                errors.Add(new ValidationError($"{displayName} must be at least 2 characters long.", propertyName));
+                break;
+            case > 50:
+                errors.Add(new ValidationError($"{displayName} must be at less than or equal to 50 characters long.", propertyName));
+                break;
+        }
+        if (!name.All(char.IsLetter))
+            errors.Add(new ValidationError($"{displayName} must consist of only letters.", propertyName));
+        return errors;
+    }
+    
+    public static List<ValidationError> ValidateWalletName(string name, string propertyName, string displayName)
+    {
+        var errors = new List<ValidationError>();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            errors.Add(new ValidationError($"{displayName} is required.", propertyName));
+            return errors;
+        }
+        switch (name.Length)
+        {
+            case < 2:
+                errors.Add(new ValidationError($"{displayName} must be at least 2 characters long.", propertyName));
+                break;
+            case > 50:
+                errors.Add(new ValidationError($"{displayName} must be at less than or equal to 50 characters long.", propertyName));
+                break;
+        }
+        if (!name.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)) || !name.Any(char.IsLetter))
+            errors.Add(new ValidationError($"{displayName} must consist of only letters or spaces.", propertyName));
+        return errors;
+    }
+    
+    
+    
     
 }

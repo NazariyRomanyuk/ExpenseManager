@@ -32,12 +32,16 @@ public static class MauiProgram
         
         builder.Services.AddTransient<WalletsPage>();
         builder.Services.AddTransient<WalletDetailsPage>();
+        builder.Services.AddTransient<WalletCreatePage>();
+        builder.Services.AddTransient<WalletEditPage>();
         builder.Services.AddTransient<TransactionDetailsPage>();
         builder.Services.AddTransient<TransactionCreatePage>();
         builder.Services.AddTransient<TransactionEditPage>();
         
         builder.Services.AddSingleton<WalletsViewModel>();
         builder.Services.AddTransient<WalletDetailsViewModel>();
+        builder.Services.AddTransient<WalletCreateViewModel>();
+        builder.Services.AddTransient<WalletEditViewModel>();
         builder.Services.AddTransient<TransactionDetailsViewModel>();
         builder.Services.AddTransient<TransactionCreateViewModel>();
         builder.Services.AddTransient<TransactionEditViewModel>();

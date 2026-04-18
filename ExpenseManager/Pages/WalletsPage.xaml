@@ -6,46 +6,69 @@
              x:Class="ExpenseManager.Pages.WalletsPage"             
              x:DataType="viewmodels:WalletsViewModel"
              Title="Wallets" IsEnabled="{Binding IsNotBusy}">
-    <Grid>
-    <CollectionView
-        ItemsSource="{Binding Wallets}"
-        Margin="10"
-        SelectionMode="Single"
-        SelectedItem="{Binding CurrentWallet}"
-        SelectionChangedCommand="{Binding LoadWalletCommand}">
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout 
-                Orientation="Vertical" 
-                ItemSpacing="10"/>
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate
-                x:DataType="models:WalletListDTO">
-                    <Border
-                        Stroke="Green"
-                        Padding="10"
-                       
-                        StrokeShape="RoundRectangle 4">
-                            <VerticalStackLayout>
-                                <Label 
-                                    Style="{StaticResource SubHeadline}"
-                                    Text="{Binding Name}">
-                                </Label>
-                                <Label
-                                    HorizontalOptions="Center">
-                                    <Label.Text>
-                                        <MultiBinding
-                                            StringFormat="{} {0} {1}">
-                                            <Binding Path="Amount"></Binding>
-                                            <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </VerticalStackLayout>                    
-                    </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="*, Auto">
+        
+        <RefreshView
+            Command="{Binding RefreshCommand}"
+            Grid.Row="0">
+            <CollectionView
+                ItemsSource="{Binding Wallets}"
+                Margin="10"
+                SelectionMode="Single"
+                SelectedItem="{Binding CurrentWallet}"
+                SelectionChangedCommand="{Binding LoadWalletCommand}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout 
+                    Orientation="Vertical" 
+                    ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate
+                    x:DataType="models:WalletListDTO">
+                        <Border
+                            Stroke="Green"
+                            Padding="10"
+                           
+                            StrokeShape="RoundRectangle 4">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                        <Label 
+                                            Style="{StaticResource SubHeadline}"
+                                            Text="{Binding Name}">
+                                        </Label>
+                                        <Label
+                                            HorizontalOptions="Center">
+                                            <Label.Text>
+                                                <MultiBinding
+                                                    StringFormat="{} {0} {1}">
+                                                    <Binding Path="Amount"></Binding>
+                                                    <Binding Path="Currency" Converter="{StaticResource EnumToDisplayConverter}"></Binding>
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    </VerticalStackLayout>             
+                                    <VerticalStackLayout 
+                                        Grid.Column="1" VerticalOptions="Center" Spacing="5">
+                                    <Button
+                                        Text="Edit"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WalletsViewModel}}, Path=EditWalletCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                    <Button
+                                        Text="Delete"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:WalletsViewModel}}, Path=DeleteWalletCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                    </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </RefreshView>
+        <Button
+            Grid.Row="1"
+            Command="{Binding AddWalletCommand }"
+            Text="Create New Wallet"
+            HorizontalOptions="Center"/>
         <BoxView
             IsVisible="{Binding IsBusy}"
             BackgroundColor="DarkGray"

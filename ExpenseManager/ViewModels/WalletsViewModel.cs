@@ -22,7 +22,8 @@ public partial class WalletsViewModel : BaseViewModel
         _service = service;
     }
 
-    internal async Task Refresh()
+    [RelayCommand]
+    public async Task Refresh()
     {
         IsBusy = true;
         try
@@ -59,5 +60,66 @@ public partial class WalletsViewModel : BaseViewModel
             IsBusy = false;
         }
         
+    }
+
+    [RelayCommand]
+    private async Task AddWallet()
+    {
+        IsBusy = true;
+        try
+        {
+            await Shell.Current.GoToAsync($"{nameof(WalletCreatePage)}");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to navigate to wallet create page: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    [RelayCommand]
+    private async Task DeleteWallet(WalletListDTO wallet)
+    {
+        IsBusy = true;
+        try
+        {
+            if (await Shell.Current.DisplayAlertAsync("Confirm", "Are you sure you want to delete this wallet?",
+                    "Yes", "No"))
+            {
+                await _service.DeleteWalletAsync(wallet.Id);
+                Wallets.Remove(wallet);
+            }
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to delete wallet: {e.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    [RelayCommand]
+    private async Task EditWallet(WalletListDTO wallet)
+    {
+        IsBusy = true;
+        try
+        {
+            var details = await _service.GetWalletAsync(wallet.Id);
+            await Shell.Current.GoToAsync($"{nameof(WalletEditPage)}", 
+                new Dictionary<string, object> { { "Wallet", details }});
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to navigate to wallet edit page: {e.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

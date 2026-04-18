@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ExpenseManager.ViewModels"
+             x:Class="ExpenseManager.Pages.WalletEditPage"
+             x:DataType="viewModels:WalletEditViewModel"
+             Title = "Wallet Edit Page" IsEnabled="{Binding IsNotBusy}">
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView>
+                <VerticalStackLayout Padding="10,20" Spacing="10">
+                    <Label
+                        Text="Wallet Name"/>
+                    <Entry
+                        Placeholder="Wallet Name"
+                        Text="{Binding Name}"></Entry>
+                    <Label 
+                        Text="{Binding Errors[Name]}" 
+                        TextColor="Red" 
+                        IsVisible="{Binding Errors[Name], Converter={StaticResource StringToBoolConverter}}" />    
+                    <Label
+                        Text="Owner First Name"/>
+                    <Entry
+                        Placeholder="Owner First Name"
+                        Text="{Binding OwnerFirstName}"></Entry>
+                    <Label
+                        Text="{Binding Errors[OwnerFirstName]}"
+                        TextColor="Red"
+                        IsVisible="{Binding Errors[OwnerFirstName], Converter={StaticResource StringToBoolConverter}}" />
+                    <Label
+                        Text="Owner Last Name"/>
+                    <Entry
+                        Placeholder="Owner Last Name"
+                        Text="{Binding OwnerLastName}"></Entry>
+                    <Label
+                        Text="{Binding Errors[OwnerLastName]}"
+                        TextColor="Red"
+                        IsVisible="{Binding Errors[OwnerLastName], Converter={StaticResource StringToBoolConverter}}" />
+                    <Grid
+                        ColumnDefinitions="*,*" 
+                        ColumnSpacing="10"
+                        Padding="10">
+                        <Button
+                            Grid.Column="0"
+                            Text="Edit Wallet"
+                            Command="{Binding EditWalletCommand}"></Button>
+                        <Button
+                            Grid.Column="1"
+                            Text="Back"
+                            Command="{Binding GoBackCommand}"></Button>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+            <BoxView
+                IsVisible="{Binding IsBusy}"
+                BackgroundColor="DarkGray"
+                Opacity="0.1"/>
+            <ActivityIndicator
+                Color="Lime"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

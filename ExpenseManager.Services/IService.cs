@@ -14,7 +14,7 @@ public interface IService
     Task UpdateWalletAsync(WalletCreateDTO wallet);
     Task DeleteWalletAsync(Guid walletId);
     Task CreateTransactionAsync(TransactionCreateDTO transaction);
-    Task UpdateTransactionAsync(TransactionCreateDTO transaction);
+    Task UpdateTransactionAsync(TransactionEditDTO transaction);
     Task DeleteTransactionAsync(Guid transactionId);
     
 }

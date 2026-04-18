@@ -1,5 +1,5 @@
 ﻿using ExpenseManager.Common.Enums;
-using ExpenseManager.DTOModels.Wallet;
+using ExpenseManager.DTOModels.Transaction;
 
 namespace ExpenseManager.Services;
 

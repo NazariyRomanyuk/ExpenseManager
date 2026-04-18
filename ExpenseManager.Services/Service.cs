@@ -75,9 +75,9 @@ public class Service : IService
         await _repository.AddTransactionAsync(transactionDbModel);
     }
 
-    public async Task UpdateTransactionAsync(TransactionCreateDTO transaction)
+    public async Task UpdateTransactionAsync(TransactionEditDTO transaction)
     {
-        var transactionDbModel = new TransactionDBModel(transaction.WalletId, transaction.Amount, transaction.PaymentCategory, 
+        var transactionDbModel = new TransactionDBModel(transaction.Id, transaction.WalletId, transaction.Amount, transaction.PaymentCategory, 
             transaction.Description, transaction.Date);
         await _repository.UpdateTransactionAsync(transactionDbModel);
     }

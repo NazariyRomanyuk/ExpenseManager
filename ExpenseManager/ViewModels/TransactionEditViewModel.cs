@@ -8,51 +8,56 @@ using ExpenseManager.Services;
 
 namespace ExpenseManager.ViewModels;
 
-public partial class TransactionCreateViewModel : BaseViewModel, IQueryAttributable
+public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IService _service;
+    private Guid _transactionId;
     private Guid _walletId;
 
-    [ObservableProperty]
+    [ObservableProperty] 
     public partial decimal Amount { get; set; }
-
-    [ObservableProperty]
-    public partial EnumWithName<PaymentCategory> PaymentCategory { get; set; }
-
-    [ObservableProperty]
-    public partial string Description { get; set; }
-
-    [ObservableProperty]
-    public partial DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-
-    [ObservableProperty]
-    public partial TimeSpan Time { get; set; } = DateTime.Now.TimeOfDay;
+    [ObservableProperty] 
+    public partial EnumWithName<PaymentCategory>? PaymentCategory { get; set; }
+    [ObservableProperty] 
+    public partial string Description { get; set; } = string.Empty;
+    [ObservableProperty] 
+    public partial DateOnly Date { get; set; }
+    [ObservableProperty] 
+    public partial TimeSpan Time { get; set; }
 
     public DateTime DateTime => Date.ToDateTime(TimeOnly.FromTimeSpan(Time));
 
     [ObservableProperty]
     public partial Dictionary<string, string> Errors { get; set; }
+
     public EnumWithName<PaymentCategory>[] PaymentCategories { get; }
 
-    public TransactionCreateViewModel(IService service)
+    partial void OnDateChanged(DateOnly value) => OnPropertyChanged(nameof(DateTime));
+    partial void OnTimeChanged(TimeSpan value) => OnPropertyChanged(nameof(DateTime));
+
+    public TransactionEditViewModel(IService service)
     {
         _service = service;
         PaymentCategories = EnumExtensions.GetValuesWithNames<PaymentCategory>();
-        Errors = InitErrors();
     }
-    
-    partial void OnDateChanged(DateOnly value) => OnPropertyChanged(nameof(DateTime));
-    partial void OnTimeChanged(TimeSpan value) => OnPropertyChanged(nameof(DateTime));
-    
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        _walletId = (Guid)query[nameof(TransactionCreateDTO.WalletId)];
+        var transaction = (TransactionDetailsDTO)query["Transaction"];
+        _transactionId = transaction.Id;
+        _walletId = (Guid)query[nameof(TransactionEditDTO.WalletId)];
+        Amount = transaction.Amount;
+        Date = DateOnly.FromDateTime(transaction.Date);
+        Time = transaction.Date.TimeOfDay;
+        Description = transaction.Description;
+        PaymentCategory = PaymentCategories.FirstOrDefault(p => p.Value == transaction.PaymentCategory);
     }
 
     [RelayCommand]
-    public async Task CreateTransaction()
+    public async Task EditTransaction()
     {
         IsBusy = true;
+        
         var errors = Validators.ValidateTransaction(Amount, PaymentCategory?.Value, Description, DateTime);
         Errors = InitErrors();
         if (errors.Count > 0)
@@ -70,16 +75,16 @@ public partial class TransactionCreateViewModel : BaseViewModel, IQueryAttributa
             IsBusy = false;
             return;
         }
-        
+
         try
         {
-            var transaction = new TransactionCreateDTO(_walletId, Amount, PaymentCategory.Value, Description, DateTime);
-            await _service.CreateTransactionAsync(transaction);
+            var dto = new TransactionEditDTO(_transactionId, _walletId, Amount, PaymentCategory!.Value, Description, DateTime);
+            await _service.UpdateTransactionAsync(dto);
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception e)
         {
-            await Shell.Current.DisplayAlertAsync("Error", $"Failed to register transaction: {e.Message}", "OK");
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to update transaction: {e.Message}", "OK");
         }
         finally
         {
@@ -90,21 +95,16 @@ public partial class TransactionCreateViewModel : BaseViewModel, IQueryAttributa
     [RelayCommand]
     public async Task GoBack()
     {
-        IsBusy = true;
         try
         {
             await Shell.Current.GoToAsync("..");
         }
         catch (Exception e)
         {
-            await Shell.Current.DisplayAlertAsync("Error", $"Failed to go back: {e.Message}", "OK");
-        }
-        finally
-        {
-            IsBusy = false;
+            await Shell.Current.DisplayAlertAsync("Error", e.Message, "OK");
         }
     }
-
+    
     private Dictionary<string, string> InitErrors()
     {
         return new Dictionary<string, string>()
@@ -115,5 +115,4 @@ public partial class TransactionCreateViewModel : BaseViewModel, IQueryAttributa
             { nameof(DateTime), string.Empty },
         };
     }
-    
 }

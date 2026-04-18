@@ -30,7 +30,8 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         _walletId = (Guid)query["WalletId"];
     }
 
-    internal async Task Refresh()
+    [RelayCommand]
+    public async Task Refresh()
     {
         IsBusy = true;
         try
@@ -80,6 +81,49 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlertAsync("Error", $"Failed to navigate to transaction create page: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteTransaction(TransactionListDTO transaction)
+    {
+        IsBusy = true;
+        try
+        {
+            if (await Shell.Current.DisplayAlertAsync("Confirm", "Are you sure you want to delete this transaction?",
+                    "Yes", "No"))
+            {
+                await _service.DeleteTransactionAsync(transaction.Id);
+                Transactions.Remove(transaction);
+            }
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to delete transaction: {e.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+    
+    [RelayCommand]
+    private async Task EditTransaction(TransactionListDTO transaction)
+    {
+        IsBusy = true;
+        try
+        {
+            var details = await _service.GetTransactionAsync(transaction.Id);
+            await Shell.Current.GoToAsync($"{nameof(TransactionEditPage)}", 
+                new Dictionary<string, object> { { "Transaction", details }, { "WalletId", _walletId } });
+        }
+        catch (Exception e)
+        {
+            await Shell.Current.DisplayAlertAsync("Error", $"Failed to navigate to transaction edit page: {e.Message}", "OK");
         }
         finally
         {

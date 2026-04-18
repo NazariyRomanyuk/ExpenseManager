@@ -79,7 +79,7 @@ public class SQLiteStorageContext : IStorageContext
     public async Task DeleteWalletAsync(Guid walletId)
     {
         await Init();
-        await _connection!.DeleteAsync(walletId);
+        await _connection!.DeleteAsync<WalletDBModel>(walletId);
     }
 
     public async Task UpdateWalletAsync(WalletDBModel wallet)
@@ -97,7 +97,7 @@ public class SQLiteStorageContext : IStorageContext
     public async Task DeleteTransactionAsync(Guid transactionId)
     {
         await Init();
-        await _connection!.DeleteAsync(transactionId);
+        await _connection!.DeleteAsync<TransactionDBModel>(transactionId);
     }
 
     public async Task UpdateTransactionAsync(TransactionDBModel transaction)

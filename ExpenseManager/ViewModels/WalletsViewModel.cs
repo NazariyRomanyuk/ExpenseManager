@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExpenseManager.Common;
+using ExpenseManager.Common.Enums;
 using ExpenseManager.DTOModels.Wallet;
 using ExpenseManager.Services;
 using ExpenseManager.Pages;
@@ -16,10 +18,39 @@ public partial class WalletsViewModel : BaseViewModel
 
     [ObservableProperty]
     public partial WalletListDTO CurrentWallet { get; set; }
+    
+    public string[] SortOptions { get; } = ["None", "Name (A-Z)", "Name (Z-A)"];
 
+    public EnumWithName<Currency>[] CurrencyFilters { get; } = [new ("All", default), ..EnumExtensions.GetValuesWithNames<Currency>()];
+
+    [ObservableProperty]
+    public partial string SelectedSort { get; set; } = "None";
+
+    [ObservableProperty]
+    public partial EnumWithName<Currency>? SelectedCurrencyFilter { get; set; }
+
+    partial void OnSelectedSortChanged(string value) => ApplyFilters();
+    partial void OnSelectedCurrencyFilterChanged(EnumWithName<Currency>? value) => ApplyFilters();
+
+    private IEnumerable<WalletListDTO> _allWallets = [];
+    
     public WalletsViewModel(IService service)
     {
         _service = service;
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = _allWallets.AsEnumerable();
+        if (SelectedCurrencyFilter?.Name != "All" && SelectedCurrencyFilter is not null)
+            filtered = filtered.Where(w => w.Currency == SelectedCurrencyFilter.Value);
+        filtered = SelectedSort switch
+        {
+            "Name (A-Z)" => filtered.OrderBy(w => w.Name),
+            "Name (Z-A)" => filtered.OrderByDescending(w => w.Name),
+            _ => filtered
+        };
+        Wallets = new ObservableCollection<WalletListDTO>(filtered);
     }
 
     [RelayCommand]
@@ -28,9 +59,11 @@ public partial class WalletsViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            Wallets = new ObservableCollection<WalletListDTO>();
+            var wallets = new List<WalletListDTO>();
             await foreach (var wallet in _service.GetAllWalletsAsync())
-                Wallets.Add(wallet);
+                wallets.Add(wallet);
+            _allWallets = wallets;
+            ApplyFilters();
         }
         catch (Exception e)
         {

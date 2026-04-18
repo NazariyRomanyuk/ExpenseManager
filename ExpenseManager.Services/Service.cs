@@ -35,7 +35,7 @@ public class Service : IService
         await foreach (var transaction in _repository.GetTransactionsAsync(walletId))
         {
             var wallet = await _repository.GetWalletAsync(transaction.WalletId) ??  throw new EntityNotFoundException("Wallet", transaction.WalletId);
-            yield return new TransactionListDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory);
+            yield return new TransactionListDTO(transaction.Id, transaction.Amount, wallet.Currency, transaction.PaymentCategory, transaction.Description);
         }
     }
 

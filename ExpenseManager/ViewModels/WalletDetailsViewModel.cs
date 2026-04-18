@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExpenseManager.Common;
+using ExpenseManager.Common.Enums;
 using ExpenseManager.Common.Exceptions;
 using ExpenseManager.DTOModels.Transaction;
 using ExpenseManager.DTOModels.Wallet;
@@ -19,10 +21,45 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
     [ObservableProperty] public partial WalletDetailsDTO CurrentWallet { get; private set; } = null!;
 
     [ObservableProperty] public partial ObservableCollection<TransactionListDTO> Transactions { get; set; } = null!;
+    
+    public string[] SortOptions { get; } = ["None", "Amount (desc.)", "Amount (asc.)"];
+
+    public EnumWithName<PaymentCategory>[] CategoryFilters { get; } = [new ("All", default), ..EnumExtensions.GetValuesWithNames<PaymentCategory>()];
+
+    [ObservableProperty]
+    public partial string SelectedSort { get; set; } = "None";
+
+    [ObservableProperty]
+    public partial EnumWithName<PaymentCategory>? SelectedCategoryFilter { get; set; }
+
+    [ObservableProperty] public partial string DescriptionSearchQuery { get; set; } = string.Empty;
+    
+    private IEnumerable<TransactionListDTO> _allTransactions = [];
+
+    partial void OnSelectedSortChanged(string value) => ApplyFilters();
+    partial void OnSelectedCategoryFilterChanged(EnumWithName<PaymentCategory>? value) => ApplyFilters();
+    partial void OnDescriptionSearchQueryChanged(string value) => ApplyFilters();
 
     public WalletDetailsViewModel(IService service)
     {
         _service = service;
+    }
+    
+    private void ApplyFilters()
+    {
+        var filtered = _allTransactions.AsEnumerable();
+        if (SelectedCategoryFilter?.Name != "All" && SelectedCategoryFilter is not null)
+            filtered = filtered.Where(t => t.PaymentCategory == SelectedCategoryFilter.Value);
+        if (!string.IsNullOrWhiteSpace(DescriptionSearchQuery))
+            filtered = filtered.Where(t => t.Description.Contains(DescriptionSearchQuery, StringComparison.OrdinalIgnoreCase));
+
+        filtered = SelectedSort switch
+        {
+            "Amount (desc.)" => filtered.OrderByDescending(w => w.Amount),
+            "Amount (asc.)" => filtered.OrderBy(w => w.Amount),
+            _ => filtered
+        };
+        Transactions = new ObservableCollection<TransactionListDTO>(filtered);
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -37,9 +74,11 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         try
         {
             CurrentWallet = await _service.GetWalletAsync(_walletId);
-            Transactions = new ObservableCollection<TransactionListDTO>();
+            var transactions = new ObservableCollection<TransactionListDTO>();
             await foreach (var item in _service.GetTransactionsAsync(_walletId))
-                Transactions.Add(item);
+                transactions.Add(item);
+            _allTransactions = transactions;
+            ApplyFilters();
         }
         catch (Exception e)
         {

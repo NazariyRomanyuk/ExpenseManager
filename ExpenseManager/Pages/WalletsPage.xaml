@@ -6,11 +6,23 @@
              x:Class="ExpenseManager.Pages.WalletsPage"             
              x:DataType="viewmodels:WalletsViewModel"
              Title="Wallets" IsEnabled="{Binding IsNotBusy}">
-    <Grid RowDefinitions="*, Auto">
-        
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*" ColumnSpacing="10" Padding="10">
+            <Picker
+                Grid.Column="0"
+                Title="Sort by"
+                ItemsSource="{Binding SortOptions}"
+                SelectedItem="{Binding SelectedSort}"/>
+            <Picker
+                Grid.Column="1"
+                Title="Filter by Currency"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding CurrencyFilters}"
+                SelectedItem="{Binding SelectedCurrencyFilter}"/>
+        </Grid>
         <RefreshView
             Command="{Binding RefreshCommand}"
-            Grid.Row="0">
+            Grid.Row="1">
             <CollectionView
                 ItemsSource="{Binding Wallets}"
                 Margin="10"
@@ -65,15 +77,18 @@
         </CollectionView>
         </RefreshView>
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
+            Margin="10"
             Command="{Binding AddWalletCommand }"
             Text="Create New Wallet"
             HorizontalOptions="Center"/>
         <BoxView
+            Grid.RowSpan="3"
             IsVisible="{Binding IsBusy}"
             BackgroundColor="DarkGray"
             Opacity="0.1"/>
         <ActivityIndicator
+            Grid.RowSpan="3"
             Color="Lime"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"

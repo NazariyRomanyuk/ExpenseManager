@@ -40,18 +40,6 @@
                         Text="{Binding Errors[Description]}"
                         TextColor="Red"
                         IsVisible="{Binding Errors[Description], Converter={StaticResource StringToBoolConverter}}" />
-                    <Label
-                        Text="Date"/>
-                    <DatePicker
-                        Date="{Binding Date, Converter={StaticResource DateOnlyToDateTimeConverter}}"></DatePicker>
-                    <Label
-                        Text="Time"/>
-                    <TimePicker
-                        Time="{Binding Time}" Format="HH:mm"></TimePicker>
-                    <Label 
-                        Text="{Binding Errors[DateTime]}" 
-                        TextColor="Red" 
-                        IsVisible="{Binding Errors[DateTime], Converter={StaticResource StringToBoolConverter}}" />  
                     <Grid
                         ColumnDefinitions="*,*" 
                         ColumnSpacing="10"

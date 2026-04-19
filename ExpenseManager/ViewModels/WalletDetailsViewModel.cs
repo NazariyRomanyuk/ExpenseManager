@@ -55,8 +55,8 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
 
         filtered = SelectedSort switch
         {
-            "Amount (desc.)" => filtered.OrderByDescending(w => w.Amount),
-            "Amount (asc.)" => filtered.OrderBy(w => w.Amount),
+            "Amount (desc.)" => filtered.OrderByDescending(t => t.Amount),
+            "Amount (asc.)" => filtered.OrderBy(t => t.Amount),
             _ => filtered
         };
         Transactions = new ObservableCollection<TransactionListDTO>(filtered);
@@ -138,6 +138,7 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
             {
                 await _service.DeleteTransactionAsync(transaction.Id);
                 Transactions.Remove(transaction);
+                await RefreshCommand.ExecuteAsync(null);
             }
         }
         catch (Exception e)

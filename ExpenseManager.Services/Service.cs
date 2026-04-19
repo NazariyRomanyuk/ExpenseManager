@@ -59,9 +59,16 @@ public class Service : IService
         await _repository.UpdateWalletAsync(walletDbModel);
     }
 
-    public Task DeleteWalletAsync(Guid walletId)
+    public async Task DeleteWalletAsync(Guid walletId)
     {
-        return _repository.DeleteWalletAsync(walletId);
+        var transactions = new List<TransactionDBModel>();
+        await foreach (var transaction in _repository.GetTransactionsAsync(walletId))
+            transactions.Add(transaction);
+    
+        foreach (var transaction in transactions)
+            await _repository.DeleteTransactionAsync(transaction.Id);
+    
+        await _repository.DeleteWalletAsync(walletId);
     }
 
     public async Task CreateTransactionAsync(TransactionCreateDTO transaction)

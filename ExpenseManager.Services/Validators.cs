@@ -26,6 +26,10 @@ public static class Validators
             errors.Add(new ValidationError("Amount cannot be 0.", nameof(TransactionCreateDTO.Amount)));
         if (category is null)
             errors.Add(new ValidationError("Payment category is required.", nameof(TransactionCreateDTO.PaymentCategory)));
+        if (category == PaymentCategory.Crediting && amount < 0)
+            errors.Add(new ValidationError("Amount must be positive for Crediting transactions.", nameof(TransactionCreateDTO.Amount)));
+        else if (category != PaymentCategory.Crediting && amount > 0)
+            errors.Add(new ValidationError("Amount must be negative for non-Crediting transactions.", nameof(TransactionCreateDTO.Amount)));
         errors.AddRange(ValidateDescription(description, nameof(TransactionCreateDTO.Description), "Description"));
         errors.AddRange(ValidateDate(date, "DateTime", "Date"));
         return errors;
@@ -123,8 +127,4 @@ public static class Validators
             errors.Add(new ValidationError($"{displayName} must consist of only letters or spaces.", propertyName));
         return errors;
     }
-    
-    
-    
-    
 }

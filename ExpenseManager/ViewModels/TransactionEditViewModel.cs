@@ -13,6 +13,7 @@ public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributabl
     private readonly IService _service;
     private Guid _transactionId;
     private Guid _walletId;
+    private DateTime _date;
 
     [ObservableProperty] 
     public partial decimal Amount { get; set; }
@@ -20,20 +21,11 @@ public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributabl
     public partial EnumWithName<PaymentCategory>? PaymentCategory { get; set; }
     [ObservableProperty] 
     public partial string Description { get; set; } = string.Empty;
-    [ObservableProperty] 
-    public partial DateOnly Date { get; set; }
-    [ObservableProperty] 
-    public partial TimeSpan Time { get; set; }
-
-    public DateTime DateTime => Date.ToDateTime(TimeOnly.FromTimeSpan(Time));
 
     [ObservableProperty]
     public partial Dictionary<string, string> Errors { get; set; }
 
     public EnumWithName<PaymentCategory>[] PaymentCategories { get; }
-
-    partial void OnDateChanged(DateOnly value) => OnPropertyChanged(nameof(DateTime));
-    partial void OnTimeChanged(TimeSpan value) => OnPropertyChanged(nameof(DateTime));
 
     public TransactionEditViewModel(IService service)
     {
@@ -47,8 +39,7 @@ public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributabl
         _transactionId = transaction.Id;
         _walletId = (Guid)query[nameof(TransactionEditDTO.WalletId)];
         Amount = transaction.Amount;
-        Date = DateOnly.FromDateTime(transaction.Date);
-        Time = transaction.Date.TimeOfDay;
+        _date = transaction.Date;
         Description = transaction.Description;
         PaymentCategory = PaymentCategories.FirstOrDefault(p => p.Value == transaction.PaymentCategory);
     }
@@ -58,7 +49,7 @@ public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributabl
     {
         IsBusy = true;
         
-        var errors = Validators.ValidateTransaction(Amount, PaymentCategory?.Value, Description, DateTime);
+        var errors = Validators.ValidateTransaction(Amount, PaymentCategory?.Value, Description, _date);
         Errors = InitErrors();
         if (errors.Count > 0)
         {
@@ -78,7 +69,7 @@ public partial class TransactionEditViewModel : BaseViewModel, IQueryAttributabl
 
         try
         {
-            var dto = new TransactionEditDTO(_transactionId, _walletId, Amount, PaymentCategory!.Value, Description, DateTime);
+            var dto = new TransactionEditDTO(_transactionId, _walletId, Amount, PaymentCategory!.Value, Description, _date);
             await _service.UpdateTransactionAsync(dto);
             await Shell.Current.GoToAsync("..");
         }
